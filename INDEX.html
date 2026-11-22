@@ -1,0 +1,2981 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CITY WATER — ستى ووتر | WOMS V7.0</title>
+  <style>
+    /* ==========================================================================
+       1. ZERO-DEPENDENCY ENTERPRISE DESIGN SYSTEM (CITY WATER V7.0)
+       ========================================================================== */
+    :root {
+      --navy-950: #040b16;
+      --navy-900: #0a192f;
+      --navy-800: #112240;
+      --navy-700: #1e3a5f;
+      --water-600: #0284c7;
+      --water-500: #0ea5e9;
+      --water-100: #e0f2fe;
+      --water-50: #f0f9ff;
+      --cyan-500: #06b6d4;
+      --cyan-400: #22d3ee;
+      --gold-500: #eab308;
+      --bg-slate: #f1f5f9;
+      --card-white: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-light: #e2e8f0;
+      --green-600: #059669;
+      --green-500: #10b981;
+      --green-50: #ecfdf5;
+      --amber-600: #d97706;
+      --amber-500: #f59e0b;
+      --amber-50: #fffbeb;
+      --red-600: #dc2626;
+      --red-500: #ef4444;
+      --red-50: #fef2f2;
+      --purple-600: #7c3aed;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 8px 24px rgba(10, 25, 47, 0.09);
+      --shadow-xl: 0 20px 45px rgba(4, 11, 22, 0.38);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Tahoma, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: var(--bg-slate);
+      color: var(--text-main);
+      line-height: 1.55;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hidden { display: none !important; }
+
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.25); }
+    }
+    .pulse-dot { animation: pulse-ring 2s infinite; }
+
+    /* ==========================================================================
+       2. GATEWAY SCREEN & BRANDING
+       ========================================================================== */
+    .gateway-screen {
+      min-height: 100vh;
+      background: radial-gradient(circle at top right, #112a4a 0%, var(--navy-900) 48%, var(--navy-950) 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .gateway-topbar {
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-lockup { display: flex; align-items: center; gap: 14px; }
+
+    .brand-logo-frame {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: #ffffff;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(6, 182, 212, 0.35);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .brand-logo-frame img { width: 100%; height: 100%; object-fit: contain; }
+
+    .gateway-center { max-width: 1200px; width: 100%; margin: 26px auto; }
+
+    .gateway-hero { text-align: center; margin-bottom: 30px; }
+
+    .scada-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(6, 182, 212, 0.14);
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      color: var(--cyan-400);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .gateway-hero h1 { font-size: clamp(22px, 3.4vw, 35px); font-weight: 800; margin-bottom: 8px; }
+    .gateway-hero p { color: #cbd5e1; font-size: 14.5px; max-width: 720px; margin: 0 auto; }
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .role-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 18px;
+      padding: 22px;
+      color: #fff;
+      text-align: start;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+      font-family: inherit;
+    }
+    .role-card:hover {
+      background: rgba(255, 255, 255, 0.11);
+      border-color: var(--cyan-400);
+      transform: translateY(-3px);
+    }
+
+    .role-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .role-card h3 { font-size: 17.5px; font-weight: 800; margin-bottom: 8px; }
+    .role-card p { font-size: 12.8px; color: #cbd5e1; margin-bottom: 18px; }
+
+    .role-card-footer {
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       3. APP SHELL & NAVIGATION
+       ========================================================================== */
+    .app-shell { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 272px;
+      background: var(--navy-900);
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      border-inline-end: 1px solid var(--navy-800);
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--navy-800);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-role-strip {
+      padding: 12px 16px;
+      background: rgba(4, 11, 22, 0.7);
+      border-bottom: 1px solid var(--navy-800);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 13px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: start;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+    .nav-btn:hover { background: var(--navy-800); color: #fff; }
+    .nav-btn.active { background: var(--water-600); color: #fff; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35); }
+    .nav-btn-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .nav-badge { padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; }
+
+    .sidebar-footer {
+      padding: 12px 16px;
+      border-top: 1px solid var(--navy-800);
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .main-column { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+    .top-header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-light);
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+    .viewport {
+      flex: 1;
+      padding: 20px;
+      max-width: 1580px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .app-footer {
+      text-align: center;
+      padding: 14px 16px;
+      font-size: 11.5px;
+      color: #475569;
+      border-top: 1px solid #e2e8f0;
+      background: #fff;
+      font-weight: 700;
+    }
+
+    /* Buttons & Inputs */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 8px 14px;
+      border-radius: 11px;
+      font-size: 12.8px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--water-600); color: #fff; }
+    .btn-primary:hover { background: var(--water-500); }
+    .btn-navy { background: var(--navy-900); color: #fff; }
+    .btn-navy:hover { background: var(--navy-800); }
+    .btn-amber { background: var(--amber-500); color: var(--navy-950); }
+    .btn-danger { background: var(--red-600); color: #fff; }
+    .btn-emerald { background: var(--green-600); color: #fff; }
+    .btn-purple { background: var(--purple-600); color: #fff; }
+    .btn-outline { background: #fff; color: var(--navy-900); border-color: #cbd5e1; }
+    .btn-outline:hover { background: #f8fafc; border-color: var(--water-600); }
+    .btn-ghost-dark { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+    .btn-lg { padding: 13px 22px; font-size: 14.5px; border-radius: 13px; }
+
+    .form-control {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 11px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      font-size: 13.5px;
+      color: var(--text-main);
+      font-family: inherit;
+      outline: none;
+    }
+    .form-control:focus { border-color: var(--water-600); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15); }
+    .form-label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 5px; }
+
+    /* Cards & Grids */
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+      gap: 14px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-inline-start: 4px solid var(--water-500);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .kpi-card.green { border-inline-start-color: var(--green-500); }
+    .kpi-card.amber { border-inline-start-color: var(--amber-500); }
+    .kpi-card.red { border-inline-start-color: var(--red-500); }
+    .kpi-card.purple { border-inline-start-color: var(--purple-600); }
+    .kpi-value { font-size: 24px; font-weight: 800; color: var(--navy-900); margin: 4px 0; }
+
+    .stations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 16px;
+    }
+
+    .station-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .station-card:hover { border-color: var(--water-500); box-shadow: var(--shadow-md); }
+
+    .telemetry-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      background: #f8fafc;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      margin: 12px 0;
+      font-size: 12px;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .badge-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .badge-green { background: var(--green-50); color: var(--green-600); border: 1px solid #a7f3d0; }
+    .badge-green .badge-dot { background: var(--green-500); }
+    .badge-amber { background: var(--amber-50); color: var(--amber-600); border: 1px solid #fde68a; }
+    .badge-amber .badge-dot { background: var(--amber-500); }
+    .badge-red { background: var(--red-50); color: var(--red-600); border: 1px solid #fecaca; }
+    .badge-red .badge-dot { background: var(--red-500); }
+    .badge-navy { background: var(--navy-900); color: var(--cyan-400); }
+
+    /* Tables */
+    .table-wrap { width: 100%; overflow-x: auto; }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: start; }
+    table.data-table th {
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 800;
+      font-size: 11.5px;
+      padding: 11px 12px;
+      text-align: start;
+      border-bottom: 1px solid #cbd5e1;
+      white-space: nowrap;
+    }
+    table.data-table td { padding: 11px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+    table.data-table tr:hover td { background: #f8fafc; }
+
+    .progress-track { width: 100%; height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 999px; transition: width 0.3s ease; }
+
+    /* ==========================================================================
+       4. INTERACTIVE STATION DIGITAL TWIN / P&ID LAYOUT CANVAS
+       ========================================================================== */
+    .pid-canvas-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 410px;
+      background-color: #071326;
+      background-image:
+        linear-gradient(rgba(34, 211, 238, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      border-radius: 16px;
+      border: 2px solid #1e3a5f;
+      overflow: hidden;
+      cursor: crosshair;
+      user-select: none;
+    }
+    .pid-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0.48;
+      pointer-events: none;
+    }
+    .pid-pipes-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .pid-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      background: rgba(10, 25, 47, 0.94);
+      border: 2px solid var(--green-500);
+      border-radius: 12px;
+      padding: 7px 11px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-align: center;
+      min-width: 96px;
+      z-index: 5;
+    }
+    .pid-node:hover { transform: translate(-50%, -50%) scale(1.08); z-index: 10; box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.35); }
+    .pid-node.warning { border-color: var(--amber-500); }
+    .pid-node.fault { border-color: var(--red-500); background: rgba(127, 29, 29, 0.95); }
+    .pid-node-tag { font-size: 9.5px; color: var(--cyan-400); display: block; }
+    .pid-node-status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-inline-end: 4px;
+    }
+
+    /* ==========================================================================
+       5. AI COPILOT CHAT & INTERVAL TABS
+       ========================================================================== */
+    .interval-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: #e2e8f0;
+      padding: 6px;
+      border-radius: 14px;
+    }
+    .interval-tab-btn {
+      flex: 1;
+      min-width: 115px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: #334155;
+      font-weight: 800;
+      font-size: 12.5px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .interval-tab-btn.active {
+      background: var(--navy-900);
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(10, 25, 47, 0.25);
+    }
+
+    .ai-chat-box {
+      background: #071326;
+      border-radius: 16px;
+      padding: 16px;
+      color: #e2e8f0;
+      max-height: 360px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ai-msg {
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      max-width: 88%;
+      line-height: 1.6;
+    }
+    .ai-msg.bot { background: #112240; border: 1px solid #1e3a5f; align-self: flex-start; color: #f8fafc; }
+    .ai-msg.user { background: var(--water-600); align-self: flex-end; color: #fff; font-weight: 700; }
+
+    /* Mobile Bottom Nav */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: var(--navy-900);
+      border-top: 1px solid var(--navy-800);
+      z-index: 40;
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .mob-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .mob-btn.active { color: var(--cyan-400); }
+
+    /* Modals & Toasts */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 11, 22, 0.76);
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+    .modal-card {
+      background: #ffffff;
+      border-radius: 18px;
+      max-width: 720px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid #cbd5e1;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    .toast-stack {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 95;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 380px;
+      pointer-events: none;
+    }
+    html[dir="ltr"] .toast-stack { left: auto; right: 16px; }
+
+    .toast-item {
+      pointer-events: auto;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.22);
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { display: none; }
+      .mobile-bottom-nav { display: grid; }
+      .main-column { padding-bottom: 70px; }
+      .viewport { padding: 14px; }
+      .top-header { padding: 10px 14px; }
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #printable-report-area, #printable-report-area * { visibility: visible; }
+      #printable-report-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast-stack" class="toast-stack"></div>
+
+  <!-- ========================================================================
+       SCREEN 1: ROLE SELECTOR GATEWAY (WITH PIN & PHONE AUTH)
+       ======================================================================== -->
+  <div id="role-gateway" class="gateway-screen">
+    <div class="gateway-topbar">
+      <div class="brand-lockup">
+        <div class="brand-logo-frame" id="gw-logo-box"></div>
+        <div>
+          <div style="font-weight: 800; font-size: 20px; letter-spacing: 0.3px;">CITY WATER — ستى ووتر <span style="font-size:11px;color:var(--cyan-400);">WOMS V7.0</span></div>
+          <div style="font-size: 11.5px; color: var(--cyan-400); font-weight: 700;">تأسست عام 2005 • العاشر من رمضان، مصر • +2 011 4066 6692</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+        <button type="button" data-action="sync-now" class="btn btn-ghost-dark" style="font-size: 12px;">
+          <span class="pulse-dot" style="width:8px;height:8px;border-radius:50%;background:#10b981;display:inline-block;"></span>
+          <span>LIVE CLOUD SYNC • CITY WATER</span>
+        </button>
+        <button type="button" data-action="toggle-lang" class="btn btn-ghost-dark">
+          <span id="gateway-lang-label">EN</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="gateway-center">
+      <div class="gateway-hero">
+        <div class="scada-pill">
+          <span class="pulse-dot" style="width:8px;height:8px;border-radius:50%;background:#10b981;"></span>
+          <span data-i18n="scada_badge">المنصة الذكية المتكاملة لإدارة وتصميم وتشغيل محطات المياه</span>
+        </div>
+        <h1 data-i18n="app_title">نظام إدارة عمليات المياه — ستى ووتر (CITY WATER)</h1>
+        <p data-i18n="app_subtitle">مراقبة لحظية لـ 12 محطة • مخططات P&ID تفاعلية • مساعد ذكاء اصطناعي • تصميم وعروض وعقود • تقارير وفوترة</p>
+      </div>
+
+      <div class="roles-grid">
+        <!-- Role 1: CEO / General Manager (PIN Protected) -->
+        <button type="button" class="role-card" style="border-color: rgba(234, 179, 8, 0.45);" data-action="open-pin-login" data-target-role="CEO">
+          <div>
+            <div class="role-icon-wrap" style="background: rgba(234,179,8,0.22); color: #facc15;" id="icon-role-ceo"></div>
+            <h3>🔒 المدير العام (Executive / CEO)</h3>
+            <p>م. عبدالله خضر — لوحة قيادة استراتيجية حصرية: الإيرادات وصافي الربح لكل محطة، نسبة تحقيق العقود، المخاطر الحرجة، والعروض والمناقصات.</p>
+          </div>
+          <div class="role-card-footer" style="color: #facc15;">
+            <span>دخول محمي برقم سري (PIN)</span>
+            <span>←</span>
+          </div>
+        </button>
+
+        <!-- Role 2: Operations Manager (PIN Protected) -->
+        <button type="button" class="role-card" data-action="open-pin-login" data-target-role="OPERATIONS MANAGER">
+          <div>
+            <div class="role-icon-wrap" style="background: rgba(2,132,199,0.25); color: #38bdf8;" id="icon-role-mgr"></div>
+            <h3>🔒 مدير العمليات والمشروعات</h3>
+            <p>د. محمد محروس مختار — إدارة كاملة لجميع المحطات الـ 12، المخططات التفاعلية، الذكاء الاصطناعي، التصميم والعقود، الفواتير والتقارير.</p>
+          </div>
+          <div class="role-card-footer" style="color: #38bdf8;">
+            <span>صلاحية إدارية كاملة (PIN)</span>
+            <span>←</span>
+          </div>
+        </button>
+
+        <!-- Role 3: Station Operator (Phone Login -> Station Isolated + 15 Min Edit Lock) -->
+        <button type="button" class="role-card" data-action="open-operator-login">
+          <div>
+            <div class="role-icon-wrap" style="background: rgba(16,185,129,0.22); color: #34d399;" id="icon-role-op"></div>
+            <h3>📱 مشغل محطة (دخول برقم الهاتف)</h3>
+            <p>دخول المشغل برقم هاتفه لعرض محطته فقط وتسجيل القراءات (كل ساعتين، وردية، يومي 8ص، أسبوعي، شهري) مع مهلة تعديل 15 دقيقة.</p>
+          </div>
+          <div class="role-card-footer" style="color: #34d399;">
+            <span>دخول المشغل الميداني</span>
+            <span>←</span>
+          </div>
+        </button>
+
+        <!-- Role 4: Maintenance & Lab -->
+        <button type="button" class="role-card" data-action="select-role" data-role="MAINTENANCE_LAB">
+          <div>
+            <div class="role-icon-wrap" style="background: rgba(6,182,212,0.22); color: #22d3ee;" id="icon-role-maint"></div>
+            <h3>🛠️ الصيانة والمعمل (CMMS & LIMS)</h3>
+            <p>أوامر الشغل، الصيانة الوقائية والطارئة على مخطط المعدات، سجل العينات المعملية، وطلبات صرف قطع الغيار والكيماويات (ROG).</p>
+          </div>
+          <div class="role-card-footer" style="color: #22d3ee;">
+            <span>مساحة الصيانة والجودة</span>
+            <span>←</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div style="text-align: center; font-size: 11.5px; color: #94a3b8; font-weight: 700;">
+      City Water (ستى ووتر) — تم التصميم والتطوير بواسطة: د. محمد محروس مختار | Designed & Developed by Dr. Mohamed Mahrous Mokhtar
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SCREEN 2: MAIN APPLICATION SHELL
+       ======================================================================== -->
+  <div id="main-app" class="app-shell hidden">
+    <aside id="app-sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo-frame" style="width:44px;height:44px;" id="sb-logo-box"></div>
+        <div style="min-width:0;">
+          <div style="font-weight: 800; color: #fff; font-size: 15.5px;">CITY WATER</div>
+          <div style="font-size: 11px; color: var(--cyan-400); font-weight:700;">ستى ووتر • WOMS V7.0</div>
+        </div>
+      </div>
+
+      <div class="sidebar-role-strip">
+        <div style="min-width:0;">
+          <div style="font-size: 10px; color: #94a3b8;">الحساب النشط</div>
+          <div id="sidebar-role-badge" style="font-size: 12px; font-weight: 800; color: var(--cyan-400);">مدير العمليات</div>
+        </div>
+        <button type="button" data-action="show-gateway" class="btn btn-ghost-dark" style="padding: 5px 10px; font-size: 11px;">خروج</button>
+      </div>
+
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+
+      <div class="sidebar-footer">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="display:flex;align-items:center;gap:6px;">
+            <span class="pulse-dot" style="width:7px;height:7px;border-radius:50%;background:#10b981;"></span>
+            <span id="sidebar-sync-status">متصل سحابياً</span>
+          </span>
+          <button type="button" data-action="toggle-lang" style="background:none;border:none;color:var(--cyan-400);font-weight:700;cursor:pointer;">EN/ع</button>
+        </div>
+        <div style="font-size: 10px; color: #64748b; line-height: 1.4;">
+          تطوير: د. محمد محروس مختار
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="top-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="brand-logo-frame" style="width:40px;height:40px;border:1px solid #cbd5e1;box-shadow:none;" id="hdr-logo-box"></div>
+          <div>
+            <h2 id="top-greeting" style="font-size: 16.5px; font-weight: 800; color: var(--navy-900);">ستى ووتر (CITY WATER) — لوحة إدارة العمليات</h2>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:11.5px;color:var(--text-muted);margin-top:2px;">
+              <span id="live-clock"></span>
+              <span>•</span>
+              <span id="sync-status-pill" style="color:var(--green-600);font-weight:700;">● متصل سحابياً • CITY WATER</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-actions" id="top-header-actions"></div>
+      </header>
+
+      <main id="module-content" class="viewport"></main>
+
+      <footer class="app-footer">
+        City Water (ستى ووتر) — تم التصميم والتطوير بواسطة: د. محمد محروس مختار | Designed & Developed by Dr. Mohamed Mahrous Mokhtar
+      </footer>
+    </div>
+
+    <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
+      <button type="button" class="mob-btn active" data-action="nav" data-module="dashboard">
+        <span id="mob-ico-home"></span><span>الرئيسية</span>
+      </button>
+      <button type="button" class="mob-btn" data-action="nav" data-module="stations">
+        <span id="mob-ico-stn"></span><span>المحطات</span>
+      </button>
+      <button type="button" class="mob-btn" data-action="nav" data-module="operations">
+        <span id="mob-ico-ops"></span><span>التشغيل</span>
+      </button>
+      <button type="button" class="mob-btn" data-action="nav" data-module="ai_copilot">
+        <span id="mob-ico-ai"></span><span>الذكاء AI</span>
+      </button>
+      <button type="button" class="mob-btn" data-action="toggle-more">
+        <span id="mob-ico-more"></span><span>المزيد</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- MOBILE MORE DRAWER -->
+  <div id="mobile-more-drawer" class="modal-backdrop hidden" style="align-items: flex-end; padding: 0;">
+    <div style="background:#fff;width:100%;border-radius:24px 24px 0 0;padding:20px;max-height:82vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid #e2e8f0;">
+        <h3 style="font-size:16px;font-weight:800;color:var(--navy-900);">جميع وحدات نظام ستى ووتر (WOMS)</h3>
+        <button type="button" data-action="toggle-more" class="btn btn-outline" style="padding:6px 12px;">✕</button>
+      </div>
+      <div id="mobile-more-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div>
+    </div>
+  </div>
+
+  <!-- GLOBAL MODAL -->
+  <div id="global-modal" class="modal-backdrop hidden">
+    <div id="global-modal-card" class="modal-card"></div>
+  </div>
+
+  <!-- ========================================================================
+       3. COMPLETE APPLICATION ENGINE (ZERO EXTERNAL DEPENDENCIES)
+       ======================================================================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      // ----------------------------------------------------------------------
+      // A. BUILT-IN CITY WATER SVG LOGO & ICONS
+      // ----------------------------------------------------------------------
+      const DEFAULT_CITYWATER_LOGO_SVG = `
+        <svg viewBox="0 0 120 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cwGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0284c7"/>
+              <stop offset="100%" stop-color="#0a192f"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="56" fill="url(#cwGrad)"/>
+          <path d="M60 22 C60 22 36 52 36 70 C36 83.2 46.8 94 60 94 C73.2 94 84 83.2 84 70 C84 52 60 22 60 22 Z" fill="#22d3ee"/>
+          <path d="M42 72 Q52 64 60 72 T78 72" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+          <text x="60" y="109" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-weight="900" font-size="11" letter-spacing="1">CITY WATER</text>
+        </svg>
+      `;
+
+      const SVG_ICONS = {
+        ceo: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+        dashboard: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>',
+        stations: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20"/><path d="M5 20V8l5 4V8l5 4V4h4v16"/></svg>',
+        layout: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="15.5" r="1.5"/><path d="M10 8.5h5.5v5.5"/></svg>',
+        operations: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+        ai: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-1v1a4 4 0 0 1-8 0v-1H7a3 3 0 0 1-3-3v-2a3 3 0 0 1 3-3h1V6a4 4 0 0 1 4-4z"/><circle cx="9.5" cy="10.5" r="1"/><circle cx="14.5" cy="10.5" r="1"/></svg>',
+        design: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+        laboratory: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6"/><path d="M10 3v6.5L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9.5V3"/></svg>',
+        maintenance: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+        inventory: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>',
+        workforce: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+        incidents: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+        finance: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>',
+        reports: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+        admin: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+        more: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>'
+      };
+
+      // ----------------------------------------------------------------------
+      // B. DEFAULT INTERACTIVE P&ID LAYOUT NODES GENERATOR FOR EACH STATION
+      // ----------------------------------------------------------------------
+      function buildDefaultLayoutNodes(st) {
+        const isSWRO = st.type === "SWRO";
+        return [
+          {
+            id: "ND-1", tag: "TK-101", name: "خزان المياه الخام", x: 12, y: 26,
+            brand: "GRP / Concrete Tank", model: "500 m³ Raw Storage", serial: st.code + "-TK01",
+            specs: "سعة تخزين 500 م³ + حساس مستوى Level Switch", status: "OPERATIONAL",
+            history: [{ date: "2026-10-12", type: "صيانة وقائية", note: "تنظيف وغسيل الخزان وفحص العوامة" }]
+          },
+          {
+            id: "ND-2", tag: "P-101", name: "طلمبة التغذية (Feed Pump)", x: 32, y: 26,
+            brand: "Grundfos", model: isSWRO ? "CRN 95-2" : "CR 64-2", serial: st.code + "-FP01",
+            specs: `تدفق ${st.feedFlow || 90} m³/h • ضغط 3.5 bar • ستانلس 316L`, status: "OPERATIONAL",
+            history: [{ date: "2026-11-01", type: "فحص دوري", note: "فحص البيرنج والسيل الميكانيكي — سليم" }]
+          },
+          {
+            id: "ND-3", tag: "FLT-101", name: "الفلاتر الرملية والخرطوشية", x: 54, y: 26,
+            brand: "Pentair / Shelco", model: "FRP Media + 5µm Cartridge", serial: st.code + "-FL01",
+            specs: "فلاتر متعددة الوسائط + هاوسنج 5 ميكرون 40 بوصة", status: "OPERATIONAL",
+            history: [{ date: "2026-11-18", type: "غسيل عكسي", note: "تم عمل Backwash وتغيير الشمعات" }]
+          },
+          {
+            id: "ND-4", tag: "DOS-101", name: "وحدة حقن الكيماويات", x: 76, y: 26,
+            brand: "Seko / Prominent", model: "Antiscalant + SBS Dosing", serial: st.code + "-DS01",
+            specs: "حقن مانع الترسيب + صوديوم ميتا باي سلفيت", status: "OPERATIONAL",
+            history: [{ date: "2026-11-10", type: "معايرة", note: "معايرة مشوار الطلمبة عند 3.5 ppm" }]
+          },
+          {
+            id: "ND-5", tag: "HPP-201", name: "طلمبة الضغط العالي (HP Pump)", x: 76, y: 72,
+            brand: isSWRO ? "Danfoss / Grundfos" : "Grundfos CRN", model: isSWRO ? "APP 43 / Duplex" : "CRN 45-8", serial: st.code + "-HP01",
+            specs: `ضغط تشغيل ${st.roPressure || 60} bar • أمبير ${st.ampere || 110} A`,
+            status: st.status === "OFFLINE" ? "FAULT" : "OPERATIONAL",
+            history: st.status === "OFFLINE"
+              ? [{ date: "2026-11-22", type: "عطل طارئ", note: "توقف بسبب تلف السيل الميكانيكي — جاري الإصلاح" }]
+              : [{ date: "2026-11-05", type: "صيانة وقائية", note: "تغيير زيت وفحص الاهتزازات" }]
+          },
+          {
+            id: "ND-6", tag: "RO-201", name: `وحدة الأغشية (${st.vesselCount || 6} فيازل)`, x: 46, y: 72,
+            brand: isSWRO ? "Toray / FilmTec SW30" : "FilmTec BW30-400", model: `${st.vesselCount || 6} Vessels × 6 Elements`, serial: st.code + "-RO01",
+            specs: `TDS المنتج: ${st.productTds} ppm (الحد ${st.maxTdsLimit} ppm) • استخلاص ${st.recovery}%`,
+            status: Number(st.productTds) > Number(st.maxTdsLimit) && st.status !== "OFFLINE" ? "WARNING" : "OPERATIONAL",
+            history: Number(st.productTds) > Number(st.maxTdsLimit)
+              ? [{ date: "2026-11-22", type: "تنبيه جودة", note: "ارتفاع أملاح المنتج — تم تحديد فيزل 3 للمراجعة" }]
+              : [{ date: "2026-10-20", type: "غسيل كيميائي", note: "CIP حمضي وقلوي — استعادة التدفق 98%" }]
+          },
+          {
+            id: "ND-7", tag: "TK-301", name: "خزان المياه المنتجة", x: 16, y: 72,
+            brand: "Product Tank + Chlorination", model: "1000 m³ Potable/Process", serial: st.code + "-PT01",
+            specs: `إنتاج يومي: ${st.currentProduction} m³/d • pH: ${st.ph}`, status: "OPERATIONAL",
+            history: [{ date: "2026-11-15", type: "فحص جودة", note: "مطابق للمواصفات القياسية المصرية" }]
+          }
+        ];
+      }
+
+      // ----------------------------------------------------------------------
+      // C. COMPLETE CITY WATER ENTERPRISE DATA
+      // ----------------------------------------------------------------------
+      const DEFAULT_DATA = {
+        updatedAt: Date.now(),
+        companyName: "CITY WATER — ستى ووتر",
+        companyTagline: "تأسست عام 2005 • العاشر من رمضان، مصر • +2 011 4066 6692",
+        customLogoDataUrl: "",
+        ceoPin: "2026",
+        mgrPin: "2026",
+        stations: [
+          {
+            id: "STN-01", code: "SWRO-01", name: "ايلاند فيو", location: "شرم الشيخ", type: "SWRO",
+            capacity: 1000, currentProduction: 960, status: "ONLINE", feedFlow: 95, productFlow: 40, recovery: 42.1,
+            feedTds: 41000, productTds: 240, maxTdsLimit: 350, vesselCount: 6, roPressure: 61.5, ampere: 118, ph: 7.4,
+            prevMeter8am: 142500, currMeter8am: 143460, pricePerM3: 18.5, chemCostPerM3: 2.1, powerCostPerM3: 4.8,
+            lat: "27.9158", lng: "34.3299", lastUpdate: "منذ 15 دقيقة", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-02", code: "SWRO-02", name: "كيلوباترا شرم px", location: "شرم الشيخ", type: "SWRO",
+            capacity: 652, currentProduction: 630, status: "ONLINE", feedFlow: 62, productFlow: 26.2, recovery: 42.3,
+            feedTds: 40500, productTds: 230, maxTdsLimit: 350, vesselCount: 6, roPressure: 59.0, ampere: 78, ph: 7.3,
+            prevMeter8am: 98100, currMeter8am: 98730, pricePerM3: 18.5, chemCostPerM3: 2.0, powerCostPerM3: 4.5,
+            lat: "27.9520", lng: "34.3850", lastUpdate: "منذ 30 دقيقة", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-03", code: "SWRO-03", name: "كيلوباترا شرم TUR", location: "شرم الشيخ", type: "SWRO",
+            capacity: 625, currentProduction: 605, status: "ONLINE", feedFlow: 60, productFlow: 25.2, recovery: 42.0,
+            feedTds: 40500, productTds: 255, maxTdsLimit: 350, vesselCount: 6, roPressure: 60.2, ampere: 82, ph: 7.4,
+            prevMeter8am: 84200, currMeter8am: 84805, pricePerM3: 18.5, chemCostPerM3: 2.2, powerCostPerM3: 4.9,
+            lat: "27.9530", lng: "34.3865", lastUpdate: "منذ 40 دقيقة", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-04", code: "SWRO-04", name: "كيلوباترا مطروح ك", location: "الساحل الشمالي", type: "SWRO",
+            capacity: 1000, currentProduction: 980, status: "ONLINE", feedFlow: 96, productFlow: 40.8, recovery: 42.5,
+            feedTds: 38800, productTds: 220, maxTdsLimit: 350, vesselCount: 6, roPressure: 58.5, ampere: 112, ph: 7.5,
+            prevMeter8am: 165000, currMeter8am: 165980, pricePerM3: 17.5, chemCostPerM3: 1.9, powerCostPerM3: 4.4,
+            lat: "31.3543", lng: "27.2373", lastUpdate: "منذ 10 دقائق", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-05", code: "SWRO-05", name: "كيلوباترا مطروح الصغيرة", location: "الساحل الشمالي", type: "SWRO",
+            capacity: 300, currentProduction: 290, status: "ONLINE", feedFlow: 29, productFlow: 12.1, recovery: 41.7,
+            feedTds: 38800, productTds: 235, maxTdsLimit: 350, vesselCount: 6, roPressure: 57.8, ampere: 38, ph: 7.4,
+            prevMeter8am: 51200, currMeter8am: 51490, pricePerM3: 17.5, chemCostPerM3: 2.0, powerCostPerM3: 4.6,
+            lat: "31.3550", lng: "27.2380", lastUpdate: "منذ 25 دقيقة", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-06", code: "SWRO-06", name: "غزالة", location: "الساحل الشمالي", type: "SWRO",
+            capacity: 1000, currentProduction: 940, status: "ONLINE", feedFlow: 93, productFlow: 39.2, recovery: 42.2,
+            feedTds: 39000, productTds: 260, maxTdsLimit: 350, vesselCount: 6, roPressure: 60.0, ampere: 115, ph: 7.3,
+            prevMeter8am: 119400, currMeter8am: 120340, pricePerM3: 17.5, chemCostPerM3: 2.0, powerCostPerM3: 4.5,
+            lat: "30.9710", lng: "28.8120", lastUpdate: "منذ 20 دقيقة", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-07", code: "SWRO-07", name: "كليوباترا مرسى علم", location: "الغردقة", type: "SWRO",
+            capacity: 1000, currentProduction: 970, status: "ONLINE", feedFlow: 95, productFlow: 40.4, recovery: 42.5,
+            feedTds: 41500, productTds: 245, maxTdsLimit: 350, vesselCount: 6, roPressure: 62.0, ampere: 120, ph: 7.4,
+            prevMeter8am: 178200, currMeter8am: 179170, pricePerM3: 19.0, chemCostPerM3: 2.2, powerCostPerM3: 4.9,
+            lat: "25.5290", lng: "34.6360", lastUpdate: "الآن", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-08", code: "BWRO-01", name: "فرج تكس", location: "العاشر", type: "BWRO",
+            capacity: 2000, currentProduction: 1920, status: "ONLINE", feedFlow: 114, productFlow: 80, recovery: 70.2,
+            feedTds: 3200, productTds: 165, maxTdsLimit: 250, vesselCount: 6, roPressure: 15.8, ampere: 64, ph: 7.2,
+            prevMeter8am: 310400, currMeter8am: 312320, pricePerM3: 9.5, chemCostPerM3: 0.9, powerCostPerM3: 1.8,
+            lat: "30.2950", lng: "31.7410", lastUpdate: "منذ 5 دقائق", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-09", code: "WWRO-01", name: "الجيزاوى", location: "العبور", type: "WWRO",
+            capacity: 1000, currentProduction: 950, status: "ONLINE", feedFlow: 53, productFlow: 39.6, recovery: 74.7,
+            feedTds: 2450, productTds: 180, maxTdsLimit: 250, vesselCount: 6, roPressure: 14.5, ampere: 48, ph: 7.5,
+            prevMeter8am: 142000, currMeter8am: 142950, pricePerM3: 10.5, chemCostPerM3: 1.3, powerCostPerM3: 2.1,
+            lat: "30.2280", lng: "31.4790", lastUpdate: "منذ 12 دقيقة", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-10", code: "BWRO-02", name: "سيتي تكستايل 1", location: "العبور", type: "BWRO",
+            capacity: 2000, currentProduction: 1890, status: "WARNING", feedFlow: 112, productFlow: 78.8, recovery: 70.4,
+            feedTds: 3400, productTds: 272, maxTdsLimit: 250, vesselCount: 6, roPressure: 16.9, ampere: 68, ph: 7.1,
+            prevMeter8am: 289000, currMeter8am: 290890, pricePerM3: 9.5, chemCostPerM3: 0.95, powerCostPerM3: 1.9,
+            lat: "30.2310", lng: "31.4820", lastUpdate: "منذ 8 دقائق", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-11", code: "BWRO-03", name: "سيتي تكستايل 2", location: "العبور", type: "BWRO",
+            capacity: 1000, currentProduction: 960, status: "ONLINE", feedFlow: 57, productFlow: 40, recovery: 70.2,
+            feedTds: 3350, productTds: 175, maxTdsLimit: 250, vesselCount: 6, roPressure: 15.4, ampere: 36, ph: 7.2,
+            prevMeter8am: 154300, currMeter8am: 155260, pricePerM3: 9.5, chemCostPerM3: 0.95, powerCostPerM3: 1.85,
+            lat: "30.2315", lng: "31.4825", lastUpdate: "منذ 18 دقيقة", layoutBgImage: "", layoutNodes: []
+          },
+          {
+            id: "STN-12", code: "BWRO-04", name: "ابو العلا تكس", location: "العبور", type: "BWRO",
+            capacity: 1000, currentProduction: 0, status: "OFFLINE", feedFlow: 0, productFlow: 0, recovery: 0,
+            feedTds: 3100, productTds: 0, maxTdsLimit: 250, vesselCount: 6, roPressure: 0, ampere: 0, ph: 7.0,
+            prevMeter8am: 112400, currMeter8am: 112400, pricePerM3: 9.5, chemCostPerM3: 0.9, powerCostPerM3: 1.8,
+            lat: "30.2250", lng: "31.4750", lastUpdate: "متعطلة - صيانة", layoutBgImage: "", layoutNodes: []
+          }
+        ],
+        operators: [
+          { id: "OPR-01", name: "يحيي سمير", phone: "01061781337", stationCode: "SWRO-07", stationGroup: "كليوباترا مرسى علم", shift: "صباحية" },
+          { id: "OPR-02", name: "اشرف حسن", phone: "01011548679", stationCode: "SWRO-07", stationGroup: "كليوباترا مرسى علم", shift: "مسائية" },
+          { id: "OPR-03", name: "مدحت حليمه", phone: "01145662673", stationCode: "SWRO-01", stationGroup: "ايلاند فيو", shift: "صباحية" },
+          { id: "OPR-04", name: "فرج الله مدكور", phone: "01120030914", stationCode: "SWRO-01", stationGroup: "ايلاند فيو", shift: "مسائية" },
+          { id: "OPR-05", name: "ابراهيم", phone: "01093991531", stationCode: "SWRO-01", stationGroup: "ايلاند فيو", shift: "ليلية" },
+          { id: "OPR-06", name: "طلبة عبد الرحمن", phone: "01006908615", stationCode: "SWRO-06", stationGroup: "غزالة", shift: "صباحية" },
+          { id: "OPR-07", name: "حسين حمد", phone: "01283366917", stationCode: "SWRO-06", stationGroup: "غزالة", shift: "مسائية" },
+          { id: "OPR-08", name: "احمد عبد الرحمن طلبة", phone: "01557441154", stationCode: "SWRO-06", stationGroup: "غزالة", shift: "ليلية" },
+          { id: "OPR-09", name: "احمد عرايس", phone: "01065592798", stationCode: "SWRO-04", stationGroup: "كيلوباترا مطروح ك", shift: "صباحية" },
+          { id: "OPR-10", name: "احمد رمضان", phone: "01092987103", stationCode: "SWRO-04", stationGroup: "كيلوباترا مطروح ك", shift: "مسائية" },
+          { id: "OPR-11", name: "ابراهيم عطية", phone: "01007994077", stationCode: "SWRO-05", stationGroup: "كيلوباترا مطروح الصغيرة", shift: "صباحية" },
+          { id: "OPR-12", name: "محمد حسن", phone: "01220089230", stationCode: "BWRO-04", stationGroup: "ابو العلا تكس", shift: "صباحية" },
+          { id: "OPR-13", name: "محمد حامد", phone: "01204827208", stationCode: "BWRO-04", stationGroup: "ابو العلا تكس", shift: "مسائية" },
+          { id: "OPR-14", name: "محمد حامد 2", phone: "01060014553", stationCode: "BWRO-01", stationGroup: "فرج تكس", shift: "صباحية" },
+          { id: "OPR-15", name: "عمر شكرى", phone: "01015670822", stationCode: "BWRO-01", stationGroup: "فرج تكس", shift: "مسائية" },
+          { id: "OPR-16", name: "عبد الخالق عبد المنعم", phone: "01114405744", stationCode: "BWRO-02", stationGroup: "سيتي تكستايل 1", shift: "صباحية" },
+          { id: "OPR-17", name: "محمد صلاح سعيد", phone: "01029947186", stationCode: "BWRO-03", stationGroup: "سيتي تكستايل 2", shift: "صباحية" },
+          { id: "OPR-18", name: "عبد الرحمن قاسم", phone: "01050113346", stationCode: "SWRO-02", stationGroup: "كيلوباترا شرم px", shift: "صباحية" },
+          { id: "OPR-19", name: "امين عبد المزيد", phone: "01021264051", stationCode: "SWRO-02", stationGroup: "كيلوباترا شرم px", shift: "مسائية" },
+          { id: "OPR-20", name: "علاء الدين ابراهيم", phone: "01157394624", stationCode: "SWRO-03", stationGroup: "كيلوباترا شرم TUR", shift: "صباحية" }
+        ],
+        managementTeam: [
+          { id: "MGT-01", name: "م. عبدالله خضر", title: "المدير العام (CEO)", sector: "الإدارة العليا" },
+          { id: "MGT-02", name: "د. محمد محروس مختار", title: "مدير العمليات والمشروعات", sector: "القطاع الصناعي والتطوير" },
+          { id: "MGT-03", name: "م. محمود جبر", title: "مدير التشغيل والصيانة للقطاع السياحي", sector: "شرم الشيخ / الساحل / الغردقة" },
+          { id: "MGT-04", name: "م. فهد طلب", title: "مدير الصيانة الميكانيكية", sector: "جميع المحطات" },
+          { id: "MGT-05", name: "م. رجب", title: "مهندس موقع وتشغيل", sector: "القطاع السياحي" },
+          { id: "MGT-06", name: "أ. إيمان", title: "مسؤول المشتريات والمخازن", sector: "الإدارة المركزية" },
+          { id: "MGT-07", name: "أ. إيهاب الشاذلي", title: "المدير الإداري والنقل", sector: "الإدارة المركزية" },
+          { id: "MGT-08", name: "أ. أحمد مصطفى", title: "الدعم الفني واللوجستيات", sector: "العاشر والعبور" },
+          { id: "MGT-09", name: "فتحي ويلدر", title: "فني لحام وتجهيزات ميكانيكية", sector: "فريق الصيانة" },
+          { id: "MGT-10", name: "إسلام خضر", title: "فني صيانة", sector: "فريق الصيانة" },
+          { id: "MGT-11", name: "أحمد سيد", title: "فني صيانة", sector: "فريق الصيانة" },
+          { id: "MGT-12", name: "رضا عبد القوي", title: "فني صيانة", sector: "فريق الصيانة" },
+          { id: "MGT-13", name: "عم خالد", title: "فني تشغيل وصيانة", sector: "فريق الصيانة" }
+        ],
+        proposals: [
+          {
+            id: "PRP-2026-01", client: "مجموعة فنادق البحر الأحمر", project: "محطة تحلية مياه بحر SWRO 1,500 م³/يوم + PX",
+            type: "SWRO", capacity: 1500, rawTds: 42000, recovery: 43, valueEgp: 14500000,
+            status: "قيد التفاوض", engineer: "د. محمد محروس مختار", date: "2026-11-18"
+          },
+          {
+            id: "PRP-2026-02", client: "شركة النيل للصناعات الغذائية — العاشر", project: "محطة معالجة مياه آبار BWRO 1,000 م³/يوم",
+            type: "BWRO", capacity: 1000, rawTds: 3500, recovery: 75, valueEgp: 3850000,
+            status: "مرسل للعميل", engineer: "د. محمد محروس مختار", date: "2026-11-20"
+          }
+        ],
+        contracts: [
+          {
+            id: "CNT-01", client: "منتجعات كيلوباترا (شرم / مطروح / مرسى علم)", scope: "تشغيل وصيانة شاملة (O&M) — 5 محطات تحلية",
+            monthlyValue: 1850000, startDate: "2025-01-01", endDate: "2027-12-31", warrantyEnd: "2027-12-31", status: "ساري"
+          },
+          {
+            id: "CNT-02", client: "مجموعة سيتي تكستايل وفرج تكس والجيزاوي", scope: "إمداد مياه معالجة وتشغيل محطات صناعية (BOO / O&M)",
+            monthlyValue: 1620000, startDate: "2025-06-01", endDate: "2026-12-15", warrantyEnd: "2026-12-15", status: "قرب التجديد"
+          }
+        ],
+        readingsLog: [
+          {
+            id: "RD-1002", intervalType: "كل ساعتين (Bi-Hourly)", stationCode: "BWRO-02", stationName: "سيتي تكستايل 1",
+            operatorName: "عبد الخالق عبد المنعم", operatorPhone: "01114405744", createdAt: Date.now() - 1000 * 60 * 40,
+            timeLabel: "اليوم 10:00 ص",
+            summary: "فيد: 112 m³/h | منتج: 78.8 m³/h | ريكفري: 70.4% | TDS منتج: 272 ppm (تجاوز الحد 250) | أمبير: 68A",
+            vesselReadings: [240, 245, 345, 250, 265, 285], outOfSpec: true, gps: "30.2310, 31.4820", photoName: "Skipped"
+          },
+          {
+            id: "RD-1001", intervalType: "يومي - الساعة 8 صباحاً", stationCode: "SWRO-07", stationName: "كليوباترا مرسى علم",
+            operatorName: "يحيي سمير", operatorPhone: "01061781337", createdAt: Date.now() - 1000 * 60 * 180,
+            timeLabel: "اليوم 08:00 ص",
+            summary: "عداد حالي: 179,170 | عداد سابق: 178,200 | صافي الإنتاج اليومي: 970 m³/d (97%)",
+            vesselReadings: [], outOfSpec: false, gps: "25.5290, 34.6360", photoName: "meter_8am.jpg"
+          }
+        ],
+        labSamples: [
+          { id: "SMP-502", stationCode: "BWRO-02", point: "Product Water", dateTime: "2026-11-22 10:15", ph: 7.1, tds: 272, turbidity: 0.32, chlorine: 0.1, status: "OUT OF SPECIFICATION", notes: "ارتفاع أملاح المنتج — فيزل 3 سجل 345 ppm." },
+          { id: "SMP-501", stationCode: "SWRO-07", point: "Product Water", dateTime: "2026-11-22 09:00", ph: 7.4, tds: 245, turbidity: 0.16, chlorine: 0.25, status: "NORMAL", notes: "مطابق للمواصفات." }
+        ],
+        workOrders: [
+          { id: "WO-402", stationCode: "BWRO-04", equipment: "طلمبة الضغط العالي HPP-201", priority: "CRITICAL", assignedTo: "م. فهد طلب", date: "2026-11-22", problem: "توقف محطة أبو العلا تكس بسبب تلف سيل الطلمبة الرئيسية", status: "IN PROGRESS" },
+          { id: "WO-401", stationCode: "BWRO-02", equipment: "فيزل رقم 3 (RO-201)", priority: "HIGH", assignedTo: "م. رجب", date: "2026-11-22", problem: "تجاوز أملاح المنتج (272 ppm) — فيزل 3 سجل 345 ppm", status: "OPEN" }
+        ],
+        inventory: [
+          { code: "CHM-01", name: "مانع ترسيب (Antiscalant)", category: "كيماويات", unit: "كجم", stock: 1650, minStock: 600, expiry: "2027-08-01" },
+          { code: "CHM-02", name: "صوديوم ميتا باي سلفيت (SBS)", category: "كيماويات", unit: "كجم", stock: 220, minStock: 400, expiry: "2027-03-15" },
+          { code: "CHM-03", name: "حمض هيدروكلوريك (HCl 32%)", category: "كيماويات", unit: "لتر", stock: 310, minStock: 500, expiry: "2027-05-20" },
+          { code: "FLT-01", name: "فلاتر خرطوشية 5 ميكرون 40 بوصة", category: "فلاتر", unit: "قطعة", stock: 240, minStock: 100, expiry: "2029-01-01" },
+          { code: "MEM-01", name: "أغشية تحلية 8 بوصة (SWRO/BWRO)", category: "ممبرين", unit: "غشاء", stock: 16, minStock: 10, expiry: "2028-11-01" },
+          { code: "SPR-01", name: "سيل ميكانيكي طلمبة ضغط عالي", category: "قطع غيار", unit: "طقم", stock: 2, minStock: 4, expiry: "2030-01-01" }
+        ],
+        rogRequests: [
+          { id: "ROG-101", stationCode: "BWRO-04", itemName: "سيل ميكانيكي طلمبة ضغط عالي", qty: 1, requestedBy: "م. فهد طلب", status: "APPROVED" },
+          { id: "ROG-102", stationCode: "SWRO-01", itemName: "صوديوم ميتا باي سلفيت (SBS)", qty: 150, requestedBy: "مدحت حليمه", status: "PENDING" }
+        ],
+        incidents: [
+          { id: "INC-902", stationCode: "BWRO-04", severity: "CRITICAL", description: "محطة أبو العلا تكس متوقفة لحين تركيب السيل الميكانيكي.", reportedBy: "محمد حسن", status: "OPEN", time: "اليوم 08:15 ص" },
+          { id: "INC-901", stationCode: "BWRO-02", severity: "HIGH", description: "تجاوز أملاح المنتج في سيتي تكستايل 1 (272 ppm > 250 ppm) — فيزل 3 (345 ppm).", reportedBy: "عبد الخالق عبد المنعم", status: "OPEN", time: "اليوم 10:00 ص" }
+        ]
+      };
+
+      // Initialize default P&ID nodes for every station
+      DEFAULT_DATA.stations.forEach(st => { st.layoutNodes = buildDefaultLayoutNodes(st); });
+
+      // ----------------------------------------------------------------------
+      // D. LIVE FIREBASE REALTIME DATABASE SYNC
+      // ----------------------------------------------------------------------
+      const STORAGE_KEY = "WOMS_CITYWATER_V7_DATA";
+      const FIREBASE_URL = "https://city-water-default-rtdb.firebaseio.com/woms_live_state.json";
+      let broadcast = null;
+      try { broadcast = new BroadcastChannel("woms_v7_citywater_sync"); } catch (e) {}
+
+      let cached = null;
+      try { cached = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); } catch (e) {}
+
+      let state = {
+        lang: "ar",
+        role: "OPERATIONS MANAGER",
+        loggedOperator: null,
+        activeModule: "dashboard",
+        selectedLayoutStationCode: "SWRO-01",
+        operatorIntervalTab: "bihourly",
+        editingReadingId: null,
+        stationFilter: "ALL",
+        stationSearch: "",
+        capturedGps: "",
+        capturedPhotoName: "",
+        reportType: "DAILY_OPS",
+        reportStation: "ALL",
+        aiMessages: [
+          { sender: "bot", text: "أهلاً بك يا دكتور محمد في مساعد الذكاء الاصطناعي لستى ووتر (CITY WATER AI Copilot). أقوم بتحليل قراءات الـ 12 محطة، فروق الضغوط، استهلاك الطاقة، والربحية لحظياً. اسألني أي سؤال أو اختر من التحليلات السريعة أدناه!" }
+        ],
+        data: (cached && Array.isArray(cached.stations)) ? cached : JSON.parse(JSON.stringify(DEFAULT_DATA))
+      };
+
+      // Ensure layoutNodes exist on loaded cached stations
+      state.data.stations.forEach(st => {
+        if (!Array.isArray(st.layoutNodes) || !st.layoutNodes.length) {
+          st.layoutNodes = buildDefaultLayoutNodes(st);
+        }
+      });
+
+      function renderCompanyLogos() {
+        const html = state.data.customLogoDataUrl
+          ? `<img src="${state.data.customLogoDataUrl}" alt="City Water Logo" />`
+          : DEFAULT_CITYWATER_LOGO_SVG;
+        ["gw-logo-box", "sb-logo-box", "hdr-logo-box"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = html;
+        });
+      }
+
+      function getLogoHTMLForReport() {
+        return state.data.customLogoDataUrl
+          ? `<img src="${state.data.customLogoDataUrl}" style="width:64px;height:64px;object-fit:contain;" alt="City Water" />`
+          : `<div style="width:64px;height:64px;">${DEFAULT_CITYWATER_LOGO_SVG}</div>`;
+      }
+
+      function normalizePhone(raw) {
+        let digits = String(raw || "").replace(/\D/g, "");
+        if (digits.startsWith("20") && digits.length === 12) digits = "0" + digits.slice(2);
+        if (digits.length === 10 && !digits.startsWith("0")) digits = "0" + digits;
+        return digits;
+      }
+
+      function isUserTyping() {
+        const el = document.activeElement;
+        return el && ["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName);
+      }
+
+      function updateSyncStatus(text, ok) {
+        const pill = document.getElementById("sync-status-pill");
+        const sb = document.getElementById("sidebar-sync-status");
+        if (pill) {
+          pill.textContent = "● " + text;
+          pill.style.color = ok ? "var(--green-600)" : "var(--amber-600)";
+        }
+        if (sb) sb.textContent = ok ? "متصل سحابياً" : "وضع محلي";
+      }
+
+      async function saveAndSync(noticeText) {
+        const ts = Date.now();
+        state.data.updatedAt = ts;
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); } catch (e) {}
+        if (broadcast) {
+          try { broadcast.postMessage({ type: "V7_SYNC", data: state.data, notice: noticeText }); } catch (e) {}
+        }
+        try {
+          const res = await fetch(FIREBASE_URL, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ payload: state.data, notice: noticeText || "تحديث جديد", lastUpdated: ts })
+          });
+          if (res.ok) updateSyncStatus("متصل سحابياً • CITY WATER", true);
+        } catch (err) {
+          updateSyncStatus("حفظ محلي (بدون إنترنت)", false);
+        }
+      }
+
+      async function pullFromCloud(manual) {
+        try {
+          const res = await fetch(FIREBASE_URL, { cache: "no-store" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          const remote = await res.json();
+          if (remote && remote.payload && Array.isArray(remote.payload.stations)) {
+            const remoteTs = remote.lastUpdated || remote.payload.updatedAt || 0;
+            if (remoteTs >= (state.data.updatedAt || 0) || manual) {
+              state.data = remote.payload;
+              state.data.updatedAt = remoteTs;
+              try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); } catch (e) {}
+              renderCompanyLogos();
+              if (!document.getElementById("main-app").classList.contains("hidden") && !isUserTyping()) {
+                renderSidebar();
+                renderCurrentModule();
+              }
+            }
+            updateSyncStatus("متصل سحابياً • CITY WATER", true);
+            if (manual) showToast("تمت المزامنة مع سحابة ستى ووتر بنجاح!", "success");
+          } else {
+            await saveAndSync("تهيئة بيانات V7.0");
+          }
+        } catch (err) {
+          if (manual) showToast("العمل في وضع التخزين المحلي الآمن.", "warning");
+        }
+      }
+
+      setInterval(async function () {
+        try {
+          const res = await fetch(FIREBASE_URL, { cache: "no-store" });
+          if (!res.ok) return;
+          const remote = await res.json();
+          if (remote && remote.payload && Array.isArray(remote.payload.stations)) {
+            const remoteTs = remote.lastUpdated || remote.payload.updatedAt || 0;
+            if (remoteTs > (state.data.updatedAt || 0)) {
+              state.data = remote.payload;
+              state.data.updatedAt = remoteTs;
+              try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); } catch (e) {}
+              renderCompanyLogos();
+              if (!document.getElementById("main-app").classList.contains("hidden") && !isUserTyping()) {
+                renderSidebar();
+                renderCurrentModule();
+              }
+              showToast(remote.notice || "وصل تحديث جديد من الموقع!", "info");
+            }
+          }
+        } catch (e) {}
+      }, 4500);
+
+      // Countdown ticker for Operator 15-minute edit window
+      setInterval(function () {
+        document.querySelectorAll("[data-countdown-end]").forEach(function (el) {
+          const end = Number(el.getAttribute("data-countdown-end"));
+          const rem = end - Date.now();
+          if (rem <= 0) {
+            if (!isUserTyping()) renderCurrentModule();
+          } else {
+            const mins = Math.floor(rem / 60000);
+            const secs = Math.floor((rem % 60000) / 1000);
+            el.textContent = mins + ":" + (secs < 10 ? "0" : "") + secs;
+          }
+        });
+      }, 1000);
+
+      function showToast(msg, type) {
+        const stack = document.getElementById("toast-stack");
+        if (!stack) return;
+        const colors = { success: "#059669", warning: "#d97706", error: "#dc2626", info: "#0a192f" };
+        const div = document.createElement("div");
+        div.className = "toast-item";
+        div.style.background = colors[type] || colors.info;
+        div.textContent = msg;
+        stack.appendChild(div);
+        setTimeout(() => { if (div.parentNode) div.parentNode.removeChild(div); }, 4200);
+      }
+
+      function badgeHTML(status) {
+        const s = String(status || "").toUpperCase();
+        let cls = "badge-red";
+        let label = s;
+        if (["ONLINE", "NORMAL", "APPROVED", "COMPLETED", "OPERATIONAL", "ساري"].includes(s)) {
+          cls = "badge-green";
+          if (s === "ONLINE") label = "نشطة (ONLINE)";
+          if (s === "OPERATIONAL") label = "تعمل بكفاءة";
+        } else if (["WARNING", "PENDING", "IN PROGRESS", "OPEN", "HIGH", "قرب التجديد", "مرسل للعميل", "قيد التفاوض"].includes(s)) {
+          cls = "badge-amber";
+          if (s === "WARNING") label = "تحذير (WARNING)";
+        } else if (s === "OFFLINE" || s === "FAULT") {
+          label = s === "OFFLINE" ? "متعطلة (OFFLINE)" : "عطل (FAULT)";
+        }
+        return `<span class="badge ${cls}"><span class="badge-dot"></span>${label}</span>`;
+      }
+
+      // ----------------------------------------------------------------------
+      // E. NAVIGATION & ROLE ACCESS
+      // ----------------------------------------------------------------------
+      const ALL_MODULES = [
+        { id: "ceo_dashboard", icon: "ceo", label: "لوحة المدير العام (CEO)" },
+        { id: "dashboard", icon: "dashboard", label: "لوحة العمليات الرئيسية" },
+        { id: "stations", icon: "stations", label: "المحطات والمنشآت (12)" },
+        { id: "station_layout", icon: "layout", label: "مخطط المحطة ومكوناتها (P&ID)" },
+        { id: "operations", icon: "operations", label: "التشغيل والقراءات الدورية" },
+        { id: "ai_copilot", icon: "ai", label: "مساعد الذكاء الاصطناعي (AI)" },
+        { id: "design_contracts", icon: "design", label: "التصميم والعروض والعقود" },
+        { id: "laboratory", icon: "laboratory", label: "جودة المياه والمعمل (LIMS)" },
+        { id: "maintenance", icon: "maintenance", label: "الصيانة وأوامر الشغل" },
+        { id: "inventory", icon: "inventory", label: "المخازن والكيماويات (ROG)" },
+        { id: "workforce", icon: "workforce", label: "المشغلين وفريق العمل" },
+        { id: "finance", icon: "finance", label: "الفواتير والتكلفة المالية" },
+        { id: "reports", icon: "reports", label: "التقارير المطبوعة A4" },
+        { id: "admin", icon: "admin", label: "الشعار والإعدادات" }
+      ];
+
+      function getVisibleModulesForRole() {
+        if (state.role === "CEO") {
+          return ALL_MODULES.filter(m => ["ceo_dashboard", "finance", "design_contracts", "ai_copilot", "reports"].includes(m.id));
+        }
+        if (state.role === "OPERATOR") {
+          return [{ id: "operations", icon: "operations", label: "تسجيل قراءات محطتي" }];
+        }
+        if (state.role === "MAINTENANCE_LAB") {
+          return ALL_MODULES.filter(m => ["maintenance", "station_layout", "laboratory", "inventory", "stations"].includes(m.id));
+        }
+        return ALL_MODULES.filter(m => m.id !== "ceo_dashboard");
+      }
+
+      function renderSidebar() {
+        const isOp = state.role === "OPERATOR";
+        const sidebar = document.getElementById("app-sidebar");
+        const mobNav = document.getElementById("mobile-bottom-nav");
+        const headerActions = document.getElementById("top-header-actions");
+
+        if (sidebar) sidebar.classList.toggle("hidden", isOp);
+        if (mobNav) mobNav.classList.toggle("hidden", isOp);
+
+        if (headerActions) {
+          if (isOp && state.loggedOperator) {
+            const st = state.data.stations.find(s => s.code === state.loggedOperator.stationCode);
+            headerActions.innerHTML = `
+              <span class="badge badge-navy" style="font-size:12px;padding:6px 12px;">👤 ${state.loggedOperator.name} • ${st ? st.name : state.loggedOperator.stationCode}</span>
+              <button type="button" data-action="sync-now" class="btn btn-outline" style="font-size:12px;">🔄 مزامنة</button>
+              <button type="button" data-action="show-gateway" class="btn btn-danger" style="font-size:12px;">تسجيل خروج</button>
+            `;
+            return;
+          } else {
+            headerActions.innerHTML = `
+              <button type="button" data-action="nav" data-module="ai_copilot" class="btn btn-purple" style="font-size:12px;">🤖 مساعد الذكاء الاصطناعي</button>
+              <button type="button" data-action="sync-now" class="btn btn-outline" style="font-size:12px;border-color:#a7f3d0;background:var(--green-50);color:var(--green-600);">🔄 مزامنة حية</button>
+              <button type="button" data-action="show-gateway" class="btn btn-navy" style="font-size:12px;">تبديل الحساب</button>
+            `;
+          }
+        }
+
+        const mods = getVisibleModulesForRole();
+        const nav = document.getElementById("sidebar-nav");
+        if (nav) {
+          nav.innerHTML = mods.map(m => {
+            const active = state.activeModule === m.id ? "active" : "";
+            return `<button type="button" class="nav-btn ${active}" data-action="nav" data-module="${m.id}"><span class="nav-btn-left"><span style="color:${active ? '#fff' : 'var(--cyan-400)'};display:flex;">${SVG_ICONS[m.icon]}</span><span>${m.label}</span></span></button>`;
+          }).join("");
+        }
+
+        const moreGrid = document.getElementById("mobile-more-grid");
+        if (moreGrid) {
+          moreGrid.innerHTML = mods.map(m => `
+            <button type="button" data-action="nav-close-more" data-module="${m.id}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border-radius:14px;border:1px solid #e2e8f0;background:#f8fafc;color:var(--navy-900);cursor:pointer;font-family:inherit;">
+              <span style="color:var(--water-600);">${SVG_ICONS[m.icon]}</span>
+              <span style="font-size:11px;font-weight:700;text-align:center;">${m.label}</span>
+            </button>
+          `).join("");
+        }
+      }
+
+      function enterRole(role, operatorObj) {
+        state.role = role;
+        state.loggedOperator = operatorObj || null;
+        document.getElementById("role-gateway").classList.add("hidden");
+        document.getElementById("main-app").classList.remove("hidden");
+
+        const roleNames = {
+          "CEO": "المدير العام (م. عبدالله خضر)",
+          "OPERATIONS MANAGER": "مدير العمليات (د. محمد محروس)",
+          "OPERATOR": "مشغل محطة",
+          "MAINTENANCE_LAB": "الصيانة والمعمل"
+        };
+        document.getElementById("sidebar-role-badge").textContent = roleNames[role] || role;
+
+        if (role === "CEO") state.activeModule = "ceo_dashboard";
+        else if (role === "OPERATOR") state.activeModule = "operations";
+        else if (role === "MAINTENANCE_LAB") state.activeModule = "maintenance";
+        else state.activeModule = "dashboard";
+
+        renderCompanyLogos();
+        renderSidebar();
+        renderCurrentModule();
+      }
+
+      // ----------------------------------------------------------------------
+      // F. MODULE RENDERERS
+      // ----------------------------------------------------------------------
+      function renderCurrentModule() {
+        const view = document.getElementById("module-content");
+        if (!view) return;
+        if (state.role === "OPERATOR") {
+          view.innerHTML = viewOperatorWorkspace();
+          recalcBiHourly();
+          recalcDaily8AM();
+          return;
+        }
+        switch (state.activeModule) {
+          case "ceo_dashboard": view.innerHTML = viewCeoExecutiveDashboard(); break;
+          case "dashboard": view.innerHTML = viewDashboard(); break;
+          case "stations": view.innerHTML = viewStations(); break;
+          case "station_layout": view.innerHTML = viewStationLayoutTwin(); break;
+          case "operations": view.innerHTML = viewOperationsManagerLog(); recalcBiHourly(); recalcDaily8AM(); break;
+          case "ai_copilot": view.innerHTML = viewAiCopilot(); break;
+          case "design_contracts": view.innerHTML = viewDesignAndContracts(); calcRoPlantSizing(); break;
+          case "laboratory": view.innerHTML = viewLaboratory(); break;
+          case "maintenance": view.innerHTML = viewMaintenance(); break;
+          case "inventory": view.innerHTML = viewInventory(); break;
+          case "workforce": view.innerHTML = viewWorkforce(); break;
+          case "finance": view.innerHTML = viewFinance(); break;
+          case "reports": view.innerHTML = viewReports(); break;
+          case "admin": view.innerHTML = viewAdmin(); break;
+          default: view.innerHTML = viewDashboard();
+        }
+      }
+
+      // 1. CEO EXECUTIVE STRATEGIC DASHBOARD (م. عبدالله خضر)
+      function viewCeoExecutiveDashboard() {
+        const stns = state.data.stations;
+        const totalCap = stns.reduce((a, b) => a + Number(b.capacity || 0), 0);
+        const totalProd = stns.reduce((a, b) => a + Number(b.currentProduction || 0), 0);
+        const fulfillment = totalCap > 0 ? ((totalProd / totalCap) * 100).toFixed(1) : "0";
+
+        let monthlyRev = 0, monthlyCost = 0;
+        const stnFinancials = stns.map(s => {
+          const vol = Number(s.currentProduction || 0) * 30;
+          const rev = vol * Number(s.pricePerM3 || 10);
+          const cost = vol * (Number(s.chemCostPerM3 || 1) + Number(s.powerCostPerM3 || 2));
+          monthlyRev += rev;
+          monthlyCost += cost;
+          return { s, vol, rev, cost, net: rev - cost };
+        });
+
+        const netProfit = monthlyRev - monthlyCost;
+        const marginPct = monthlyRev > 0 ? ((netProfit / monthlyRev) * 100).toFixed(1) : "0";
+        const proposalsVal = state.data.proposals.reduce((a, b) => a + Number(b.valueEgp || 0), 0);
+        const critIncidents = state.data.incidents.filter(i => i.status !== "RESOLVED");
+
+        return `
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <div style="background:linear-gradient(135deg, var(--navy-950), var(--navy-800));color:#fff;border-radius:20px;padding:24px;border:1px solid rgba(234,179,8,0.4);">
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+                <div>
+                  <span class="badge" style="background:rgba(234,179,8,0.2);color:#facc15;margin-bottom:8px;">EXECUTIVE BOARDROOM • لوحة الإدارة العليا</span>
+                  <h2 style="font-size:22px;font-weight:800;">أهلاً بك، م. عبدالله خضر — المدير العام لشركة ستى ووتر</h2>
+                  <p style="font-size:13px;color:#cbd5e1;margin-top:4px;">ملخص تنفيذي استراتيجي للأداء المالي، الالتزام التعاقدي، المخاطر الحرجة، ونمو المشروعات الجديدة</p>
+                </div>
+                <button type="button" class="btn btn-amber" data-action="nav" data-module="reports">🖨️ طباعة الملخص التنفيذي A4</button>
+              </div>
+            </div>
+
+            <div class="kpi-grid">
+              <div class="kpi-card green">
+                <span style="font-size:12px;color:#64748b;font-weight:700;">إجمالي الإيرادات الشهرية المتوقعة</span>
+                <div class="kpi-value" style="color:var(--green-600);">${Math.round(monthlyRev).toLocaleString()} <span style="font-size:12px;">ج.م</span></div>
+                <span style="font-size:11.5px;color:var(--green-600);font-weight:700;">من 12 محطة تحلية ومعالجة</span>
+              </div>
+              <div class="kpi-card">
+                <span style="font-size:12px;color:#64748b;font-weight:700;">صافي الربح التشغيلي الشهري</span>
+                <div class="kpi-value" style="color:var(--water-600);">${Math.round(netProfit).toLocaleString()} <span style="font-size:12px;">ج.م</span></div>
+                <span style="font-size:11.5px;color:var(--water-600);font-weight:700;">هامش ربحية: ${marginPct}%</span>
+              </div>
+              <div class="kpi-card purple">
+                <span style="font-size:12px;color:#64748b;font-weight:700;">نسبة الالتزام بالإنتاج التعاقدي</span>
+                <div class="kpi-value">${fulfillment}%</div>
+                <span style="font-size:11.5px;color:#64748b;">${totalProd.toLocaleString()} من ${totalCap.toLocaleString()} م³/يوم</span>
+              </div>
+              <div class="kpi-card amber">
+                <span style="font-size:12px;color:#64748b;font-weight:700;">محفظة العروض والمناقصات الجارية</span>
+                <div class="kpi-value" style="color:var(--amber-600);">${proposalsVal.toLocaleString()} <span style="font-size:12px;">ج.م</span></div>
+                <span style="font-size:11.5px;color:#64748b;">${state.data.proposals.length} عروض فنية ومالية نشطة</span>
+              </div>
+            </div>
+
+            ${critIncidents.length ? `
+              <div class="card" style="background:var(--red-50);border:2px solid #fecaca;">
+                <h3 style="font-size:15px;font-weight:800;color:var(--red-600);margin-bottom:10px;">🚨 المخاطر والأعطال الحرجة التي تتطلب قراراً (${critIncidents.length})</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">
+                  ${critIncidents.map(i => `<div style="background:#fff;padding:12px;border-radius:12px;border:1px solid #fecaca;"><b>${i.stationCode}</b> — <span style="font-size:13px;">${i.description}</span></div>`).join("")}
+                </div>
+              </div>
+            ` : ""}
+
+            <div class="card">
+              <h3 style="font-size:16px;font-weight:800;margin-bottom:12px;">تحليل الربحية والإنتاج التعاقدي لكل محطة</h3>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead><tr><th>المحطة</th><th>القطاع</th><th>الحالة</th><th>الإنتاج الشهري (م³)</th><th>الإيراد الشهري</th><th>التكلفة التشغيلية</th><th>صافي الربح</th></tr></thead>
+                  <tbody>
+                    ${stnFinancials.map(r => `
+                      <tr>
+                        <td><b>${r.s.code}</b> — ${r.s.name}</td>
+                        <td>${r.s.location}</td>
+                        <td>${badgeHTML(r.s.status)}</td>
+                        <td><b>${r.vol.toLocaleString()}</b></td>
+                        <td style="color:var(--green-600);font-weight:700;">${Math.round(r.rev).toLocaleString()} ج.م</td>
+                        <td style="color:var(--amber-600);">${Math.round(r.cost).toLocaleString()} ج.م</td>
+                        <td><b>${Math.round(r.net).toLocaleString()} ج.م</b></td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. OPERATIONS DASHBOARD
+      function viewDashboard() {
+        const stns = state.data.stations;
+        const totalCap = stns.reduce((a, b) => a + Number(b.capacity || 0), 0);
+        const totalProd = stns.reduce((a, b) => a + Number(b.currentProduction || 0), 0);
+        const activeCount = stns.filter(s => s.status !== "OFFLINE").length;
+        const outOfSpecCount = stns.filter(s => Number(s.productTds) > Number(s.maxTdsLimit)).length + state.data.incidents.filter(i => i.status !== "RESOLVED").length;
+        const targetPct = totalCap > 0 ? ((totalProd / totalCap) * 100).toFixed(1) : "0.0";
+
+        const filters = ["ALL", "SWRO", "BWRO", "WWRO"];
+        const filteredStns = stns.filter(s => state.stationFilter === "ALL" || s.type === state.stationFilter);
+
+        return `
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div class="kpi-grid">
+              <div class="kpi-card"><span style="font-size:12px;color:#64748b;font-weight:700;">إجمالي المحطات</span><div class="kpi-value">${stns.length}</div><span style="font-size:11.5px;color:var(--water-600);font-weight:700;">7 SWRO • 4 BWRO • 1 WWRO</span></div>
+              <div class="kpi-card purple"><span style="font-size:12px;color:#64748b;font-weight:700;">السعة التصميمية</span><div class="kpi-value">${totalCap.toLocaleString()} <span style="font-size:12px;">م³/يوم</span></div></div>
+              <div class="kpi-card green"><span style="font-size:12px;color:#64748b;font-weight:700;">إنتاج اليوم الفعلي</span><div class="kpi-value" style="color:var(--green-600);">${totalProd.toLocaleString()} <span style="font-size:12px;">م³/يوم</span></div></div>
+              <div class="kpi-card"><span style="font-size:12px;color:#64748b;font-weight:700;">تحقيق الهدف</span><div class="kpi-value">${targetPct}%</div></div>
+              <div class="kpi-card green"><span style="font-size:12px;color:#64748b;font-weight:700;">محطات نشطة</span><div class="kpi-value">${activeCount} / ${stns.length}</div></div>
+              <div class="kpi-card red"><span style="font-size:12px;color:#64748b;font-weight:700;">قيم خارج الحدود وإنذارات</span><div class="kpi-value" style="color:var(--red-600);">${outOfSpecCount}</div></div>
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
+              <h3 style="font-size:17px;font-weight:800;color:var(--navy-900);">حالة المحطات اللحظية (${filteredStns.length})</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${filters.map(f => `<button type="button" class="btn ${state.stationFilter === f ? 'btn-navy' : 'btn-outline'}" style="padding:6px 14px;font-size:12px;" data-action="filter-stn" data-val="${f}">${f === "ALL" ? "الكل (12)" : f}</button>`).join("")}
+              </div>
+            </div>
+
+            <div class="stations-grid">
+              ${filteredStns.map(st => renderStationCard(st)).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderStationCard(st) {
+        const tdsExceed = Number(st.productTds) > Number(st.maxTdsLimit) && st.status !== "OFFLINE";
+        const pct = st.capacity > 0 ? Math.min(100, Math.round((st.currentProduction / st.capacity) * 100)) : 0;
+        return `
+          <div class="station-card" style="border-top: 4px solid ${st.status === 'ONLINE' ? 'var(--green-500)' : st.status === 'WARNING' ? 'var(--amber-500)' : 'var(--red-500)'};">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span class="badge badge-navy">${st.code}</span>
+                  <span style="font-size:11px;font-weight:800;background:#f1f5f9;padding:3px 8px;border-radius:6px;color:#334155;">${st.type}</span>
+                </div>
+                ${badgeHTML(st.status)}
+              </div>
+
+              <h4 style="font-size:16px;font-weight:800;color:var(--navy-900);">${st.name}</h4>
+              <div style="font-size:12px;color:#64748b;margin-top:2px;">📍 ${st.location} • السعة: <b>${Number(st.capacity).toLocaleString()} م³/يوم</b></div>
+
+              <div class="telemetry-mini-grid">
+                <div><span style="color:#64748b;display:block;font-size:11px;">إنتاج اليوم</span><b style="color:var(--navy-900);">${Number(st.currentProduction).toLocaleString()} م³/يوم</b></div>
+                <div><span style="color:#64748b;display:block;font-size:11px;">الاستخلاص</span><b style="color:var(--water-600);">${st.recovery}%</b></div>
+                <div><span style="color:#64748b;display:block;font-size:11px;">أملاح المنتج (حد ${st.maxTdsLimit})</span><b style="color:${tdsExceed ? 'var(--red-600)' : 'var(--green-600)'};">${st.productTds} ppm ${tdsExceed ? '⚠️' : ''}</b></div>
+                <div><span style="color:#64748b;display:block;font-size:11px;">الضغط / الأمبير</span><b>${st.roPressure} bar • ${st.ampere} A</b></div>
+              </div>
+
+              <div style="margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:4px;">
+                  <span>نسبة التشغيل</span><span>${pct}%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" style="width:${pct}%;background:${st.status === 'ONLINE' ? 'var(--green-500)' : st.status === 'WARNING' ? 'var(--amber-500)' : 'var(--red-500)'};"></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px;padding-top:10px;border-top:1px solid #f1f5f9;">
+              <button type="button" class="btn btn-primary" style="padding:5px 10px;font-size:11.5px;" data-action="open-station-layout" data-code="${st.code}">🗺️ مخطط المحطة والمعدات</button>
+              <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11.5px;" data-action="quick-edit-stn" data-id="${st.id}">✏️ تعديل</button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 3. STATIONS & PLANTS MANAGEMENT
+      function viewStations() {
+        const filters = ["ALL", "SWRO", "BWRO", "WWRO"];
+        const q = state.stationSearch.toLowerCase();
+        const list = state.data.stations.filter(s => {
+          const okF = state.stationFilter === "ALL" || s.type === state.stationFilter;
+          const okQ = !q || s.name.includes(q) || s.code.toLowerCase().includes(q) || s.location.includes(q);
+          return okF && okQ;
+        });
+
+        return `
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+              <div>
+                <h2 style="font-size:20px;font-weight:800;color:var(--navy-900);">إدارة المحطات والمنشآت (${state.data.stations.length} محطة)</h2>
+                <p style="font-size:12.5px;color:#64748b;">إدارة شاملة للمحطات، الدخول لمخطط الـ Layout التفاعلي، أو تعديل بيانات أي محطة</p>
+              </div>
+              <button type="button" class="btn btn-primary" data-action="open-add-station">+ إضافة محطة جديدة</button>
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;">
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                ${filters.map(f => `<button type="button" class="btn ${state.stationFilter === f ? 'btn-navy' : 'btn-outline'}" style="padding:6px 14px;font-size:12px;" data-action="filter-stn" data-val="${f}">${f === "ALL" ? "الكل" : f}</button>`).join("")}
+              </div>
+              <input type="text" id="stn-search-box" value="${state.stationSearch}" placeholder="بحث باسم المحطة أو الكود أو الموقع..." class="form-control" style="max-width:280px;" />
+            </div>
+
+            <div class="stations-grid">
+              ${list.map(st => renderStationCard(st)).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. INTERACTIVE STATION DIGITAL TWIN / P&ID LAYOUT & EQUIPMENT BOM
+      function viewStationLayoutTwin() {
+        const st = state.data.stations.find(s => s.code === state.selectedLayoutStationCode) || state.data.stations[0];
+        const nodes = st.layoutNodes || [];
+
+        // Build connecting SVG polyline through node coordinates
+        const pointsStr = nodes.map(n => `${n.x}%,${n.y}%`).join(" ");
+        let linesSVG = "";
+        for (let i = 0; i < nodes.length - 1; i++) {
+          linesSVG += `<line x1="${nodes[i].x}%" y1="${nodes[i].y}%" x2="${nodes[i+1].x}%" y2="${nodes[i+1].y}%" stroke="#0ea5e9" stroke-width="3" stroke-dasharray="6,4" />`;
+        }
+
+        return `
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+              <div>
+                <h2 style="font-size:20px;font-weight:800;color:var(--navy-900);">🗺️ مخطط المحطة التفاعلي ومكوناتها (Digital Twin P&ID)</h2>
+                <p style="font-size:12.5px;color:#64748b;">اضغط على أي معدة على المخطط لعرض مواصفاتها وتعديلها أو إضافة سجل صيانة/عطل لها، أو اضغط في أي مكان لإضافة نقطة جديدة</p>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+                <select id="layout-stn-selector" class="form-control" style="width:auto;font-weight:800;">
+                  ${state.data.stations.map(s => `<option value="${s.code}" ${s.code === st.code ? "selected" : ""}>${s.code} — ${s.name}</option>`).join("")}
+                </select>
+                <label class="btn btn-outline" style="cursor:pointer;font-size:12px;">
+                  🖼️ رفع رسمة Layout خلفية
+                  <input type="file" accept="image/*" id="upload-layout-bg" style="display:none;" />
+                </label>
+                <button type="button" class="btn btn-primary" style="font-size:12px;" data-action="open-add-layout-node">+ إضافة نقطة معدة</button>
+              </div>
+            </div>
+
+            <!-- INTERACTIVE 2D P&ID CANVAS -->
+            <div class="card" style="padding:14px;">
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;font-size:12px;">
+                <div><b>محطة ${st.name} (${st.code})</b> • اضغط بالماوس في أي مكان فارغ على المخطط لإضافة معدة جديدة في نفس الإحداثيات</div>
+                <div style="display:flex;gap:12px;">
+                  <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--green-500);"></span> تعمل بكفاءة</span>
+                  <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--amber-500);"></span> تحتاج متابعة</span>
+                  <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--red-500);"></span> عطل / متوقفة</span>
+                </div>
+              </div>
+
+              <div id="pid-canvas" class="pid-canvas-wrap" data-stn-code="${st.code}">
+                ${st.layoutBgImage ? `<img src="${st.layoutBgImage}" class="pid-bg-img" alt="Station Layout" />` : ""}
+                <svg class="pid-pipes-svg">${linesSVG}</svg>
+                ${nodes.map(nd => {
+                  const stCls = nd.status === "FAULT" ? "fault" : nd.status === "WARNING" ? "warning" : "";
+                  const dotColor = nd.status === "FAULT" ? "#ef4444" : nd.status === "WARNING" ? "#f59e0b" : "#10b981";
+                  return `
+                    <div class="pid-node ${stCls}" style="left:${nd.x}%;top:${nd.y}%;" data-action="inspect-layout-node" data-node-id="${nd.id}">
+                      <span class="pid-node-tag"><span class="pid-node-status-dot" style="background:${dotColor};"></span>${nd.tag}</span>
+                      <div>${nd.name}</div>
+                    </div>
+                  `;
+                }).join("")}
+              </div>
+            </div>
+
+            <!-- EQUIPMENT BOM TABLE FOR THIS STATION -->
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <h3 style="font-size:15.5px;font-weight:800;">جدول مكونات ومعدات محطة ${st.name} (${nodes.length} معدة)</h3>
+                <button type="button" class="btn btn-navy" style="font-size:12px;" data-action="print-station-bom">🖨️ طباعة كشف المعدات A4</button>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead><tr><th>الكود (Tag)</th><th>اسم المعدة</th><th>الماركة / الموديل</th><th>المواصفات الفنية</th><th>الحالة</th><th>سجل الصيانات والأعطال</th><th>إدارة</th></tr></thead>
+                  <tbody>
+                    ${nodes.map(nd => `
+                      <tr>
+                        <td><span class="badge badge-navy">${nd.tag}</span></td>
+                        <td><b>${nd.name}</b></td>
+                        <td><b>${nd.brand}</b><div style="font-size:11px;color:#64748b;">${nd.model}</div></td>
+                        <td>${nd.specs}</td>
+                        <td>${badgeHTML(nd.status)}</td>
+                        <td>${(nd.history || []).length} سجل</td>
+                        <td><button type="button" class="btn btn-outline" style="padding:4px 10px;font-size:11px;" data-action="inspect-layout-node" data-node-id="${nd.id}">⚙️ فتح وتعديل</button></td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 5. OPERATOR & 5-TIER PERIODIC LOGGING (WITH 15-MIN EDIT LOCK)
+      function viewOperatorWorkspace() {
+        const op = state.loggedOperator;
+        const st = state.data.stations.find(s => s.code === (op ? op.stationCode : "SWRO-01")) || state.data.stations[0];
+        const myReadings = state.data.readingsLog.filter(r => r.stationCode === st.code);
+
+        return `
+          <div style="max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:18px;">
+            <div style="background:var(--navy-900);color:#fff;border-radius:18px;padding:20px;">
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+                <div>
+                  <span class="badge" style="background:rgba(34,211,238,0.2);color:var(--cyan-400);margin-bottom:6px;">${st.code} • ${st.type}</span>
+                  <h2 style="font-size:21px;font-weight:800;">محطة ${st.name} (${st.location})</h2>
+                  <p style="font-size:13px;color:#cbd5e1;margin-top:4px;">المشغل: <b>${op ? op.name : "مشغل"}</b> • السعة: <b>${st.capacity} م³/يوم</b> • حد أملاح المنتج: <b>${st.maxTdsLimit} ppm</b></p>
+                </div>
+                <div>${badgeHTML(st.status)}</div>
+              </div>
+            </div>
+
+            ${render5TierEntryForm(st, op ? op.name : "مشغل", op ? op.phone : "", true)}
+
+            <div class="card">
+              <h3 style="font-size:15.5px;font-weight:800;margin-bottom:6px;">سجل قراءات محطة ${st.name}</h3>
+              <p style="font-size:12px;color:#64748b;margin-bottom:12px;">يُسمح بتعديل القراءة خلال <b>15 دقيقة</b> فقط من وقت إرسالها، وبعدها تُقفل تلقائياً.</p>
+              ${renderReadingsFeed(myReadings, true)}
+            </div>
+          </div>
+        `;
+      }
+
+      function viewOperationsManagerLog() {
+        const st = state.data.stations[0];
+        return `
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div>
+              <h2 style="font-size:20px;font-weight:800;color:var(--navy-900);">التشغيل والقراءات الدورية (5 مستويات زمنية)</h2>
+              <p style="font-size:12.5px;color:#64748b;">متابعة وتسجيل القراءات (كل ساعتين، كل وردية، يومي 8 صباحاً، أسبوعي، شهري) لجميع المحطات</p>
+            </div>
+            ${render5TierEntryForm(st, "د. محمد محروس مختار", "01000000001", false)}
+            <div class="card">
+              <h3 style="font-size:15.5px;font-weight:800;margin-bottom:12px;">جميع القراءات المسجلة بالمحطات</h3>
+              ${renderReadingsFeed(state.data.readingsLog, false)}
+            </div>
+          </div>
+        `;
+      }
+
+      function render5TierEntryForm(defaultStation, operatorName, operatorPhone, lockStation) {
+        const tabs = [
+          { id: "bihourly", label: "⏱️ كل ساعتين" },
+          { id: "shift", label: "🔄 كل وردية" },
+          { id: "daily8am", label: "🕗 يومي (عداد 8 ص)" },
+          { id: "weekly", label: "📅 أسبوعي" },
+          { id: "monthly", label: "📊 شهري" }
+        ];
+        const curTab = state.operatorIntervalTab;
+        const stCode = lockStation ? defaultStation.code : (document.getElementById("f-stn-select") ? document.getElementById("f-stn-select").value : defaultStation.code);
+        const activeSt = state.data.stations.find(s => s.code === stCode) || defaultStation;
+        const vCount = Number(activeSt.vesselCount || 6);
+
+        let fieldsHTML = "";
+        if (curTab === "bihourly") {
+          fieldsHTML = `
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
+              <div><label class="form-label">تدفق الفيد Feed Flow (m³/h) *</label><input type="number" step="0.1" id="bh-feed-flow" value="${activeSt.feedFlow || 95}" required class="form-control"/></div>
+              <div><label class="form-label">تدفق المنتج Product Flow (m³/h) *</label><input type="number" step="0.1" id="bh-prod-flow" value="${activeSt.productFlow || 40}" required class="form-control" style="font-weight:800;color:var(--water-600);"/></div>
+              <div><label class="form-label">أملاح الفيد Feed TDS (ppm) *</label><input type="number" id="bh-feed-tds" value="${activeSt.feedTds || 38000}" required class="form-control"/></div>
+              <div><label class="form-label">أملاح المنتج Product TDS (ppm) *</label><input type="number" id="bh-prod-tds" value="${activeSt.productTds || 230}" required class="form-control" style="font-weight:800;"/></div>
+              <div><label class="form-label">ضغط التشغيل RO Pressure (bar) *</label><input type="number" step="0.1" id="bh-press" value="${activeSt.roPressure || 60}" required class="form-control"/></div>
+              <div><label class="form-label">شدة التيار Ampere (A) *</label><input type="number" step="0.1" id="bh-amp" value="${activeSt.ampere || 110}" required class="form-control"/></div>
+            </div>
+
+            <div style="background:var(--navy-900);color:#fff;border-radius:14px;padding:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;text-align:center;">
+              <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">الاستخلاص التلقائي (Recovery)</span><b id="auto-rec-val" style="font-size:18px;color:#34d399;">42.1%</b></div>
+              <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">تدفق الريجكت</span><b id="auto-rej-flow" style="font-size:18px;">55.0 m³/h</b></div>
+              <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">أملاح الريجكت التلقائية</span><b id="auto-rej-tds" style="font-size:18px;color:#fbbf24;">65,450 ppm</b></div>
+              <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">حد أملاح المنتج</span><b style="font-size:18px;">${activeSt.maxTdsLimit} ppm</b></div>
+            </div>
+
+            <div id="vessel-alert-box" class="hidden" style="background:var(--red-50);border:2px solid var(--red-600);border-radius:14px;padding:16px;">
+              <div style="font-weight:800;color:var(--red-600);font-size:14px;margin-bottom:4px;">🚨 تنبيه إجباري: أملاح المنتج تخطت الحد المسموح (${activeSt.maxTdsLimit} ppm)!</div>
+              <p style="font-size:12.5px;color:#7f1d1d;margin-bottom:12px;">يجب إدخال أملاح كل فيزل (Pressure Vessel) على حدة قبل السماح بالحفظ:</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;">
+                ${Array.from({ length: vCount }, (_, i) => `<div><label class="form-label" style="color:var(--red-600);">فيزل ${i + 1} (ppm) *</label><input type="number" class="form-control vessel-tds-input" placeholder="TDS #${i + 1}" /></div>`).join("")}
+              </div>
+            </div>
+          `;
+        } else if (curTab === "shift") {
+          fieldsHTML = `
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+              <div><label class="form-label">الوردية *</label><select id="sh-shift" class="form-control"><option>الوردية الصباحية</option><option>الوردية المسائية</option><option>الوردية الليلية</option></select></div>
+              <div><label class="form-label">النظافة العامة بالمحطة *</label><select id="sh-clean" class="form-control"><option>ممتازة ونظيفة</option><option>مقبولة</option><option>تحتاج نظافة فورية</option></select></div>
+              <div><label class="form-label">حرارة الطلمبات *</label><select id="sh-pump-temp" class="form-control"><option>طبيعية (Normal)</option><option>مرتفعة نسبياً</option><option>سخونة عالية خطرة</option></select></div>
+              <div><label class="form-label">صوت واهتزاز الطلمبات *</label><select id="sh-pump-sound" class="form-control"><option>صوت طبيعي منتظم</option><option>صوت خشونة / اهتزاز غير طبيعي</option></select></div>
+              <div><label class="form-label">حالة الأعطال *</label><select id="sh-fault" class="form-control" style="font-weight:800;"><option value="NONE">لا يوجد أعطال</option><option value="FAULT">يوجد عطل / توقف 🚨</option></select></div>
+              <div><label class="form-label">pH</label><input type="number" step="0.1" id="sh-ph" value="7.4" class="form-control"/></div>
+              <div><label class="form-label">الكلور الحر</label><input type="number" step="0.05" id="sh-cl" value="0.2" class="form-control"/></div>
+            </div>
+          `;
+        } else if (curTab === "daily8am") {
+          fieldsHTML = `
+            <div style="background:var(--water-50);border:1px solid #bae6fd;border-radius:12px;padding:12px;font-size:12.5px;">
+              🕗 <b>قراءة عداد الساعة 8:00 صباحاً:</b> يطرح النظام القراءة الحالية من قراءة أمس (<b>${Number(activeSt.currMeter8am).toLocaleString()} م³</b>) لحساب صافي إنتاج اليوم تلقائياً.
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+              <div><label class="form-label">قراءة عداد أمس (8:00 ص)</label><input type="number" id="d8-prev" value="${activeSt.currMeter8am}" readonly class="form-control" style="background:#f1f5f9;"/></div>
+              <div><label class="form-label">قراءة العداد الحالية (8:00 ص) *</label><input type="number" id="d8-curr" value="${Number(activeSt.currMeter8am) + Number(activeSt.capacity)}" required class="form-control" style="font-weight:800;color:var(--water-600);"/></div>
+              <div><label class="form-label">استهلاك الكهرباء (kWh)</label><input type="number" id="d8-kwh" value="${Math.round(activeSt.capacity * 3.4)}" class="form-control"/></div>
+            </div>
+            <div style="background:var(--navy-900);color:#fff;border-radius:14px;padding:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+              <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">صافي إنتاج اليوم</span><b id="d8-net-prod" style="font-size:20px;color:#34d399;">${activeSt.capacity} م³</b></div>
+              <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">تحقيق السعة</span><b id="d8-pct" style="font-size:20px;">100%</b></div>
+              <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">استهلاك الطاقة</span><b id="d8-sec" style="font-size:20px;">3.40 kWh/m³</b></div>
+            </div>
+          `;
+        } else if (curTab === "weekly") {
+          fieldsHTML = `
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+              <div><label class="form-label">حالة غسيل الفلاتر والممبرين والمعدات *</label><select id="wk-wash" class="form-control"><option>تم عمل غسيل عكسي للفلاتر (Backwash)</option><option>تم عمل غسيل كيميائي للممبرين (CIP)</option><option>تم تغيير الفلاتر الخرطوشية</option><option>تحتاج غسيل قريباً</option></select></div>
+              <div><label class="form-label">معامل التلوث (SDI)</label><input type="number" step="0.1" id="wk-sdi" value="2.4" class="form-control"/></div>
+              <div><label class="form-label">التسريبات وزيت الطلمبات</label><select id="wk-oil" class="form-control"><option>سليم ولا يوجد تسريبات</option><option>تم تزويد الزيت</option></select></div>
+            </div>
+          `;
+        } else {
+          fieldsHTML = `
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+              <div><label class="form-label">كفاءة الأغشية الشهرية (%)</label><input type="number" id="mo-norm" value="96" class="form-control"/></div>
+              <div><label class="form-label">معايرة الحساسات</label><select id="mo-cal" class="form-control"><option>تمت المعايرة ومطابقة</option><option>تحتاج معايرة</option></select></div>
+              <div><label class="form-label">الجرد الشهري</label><select id="mo-inv" class="form-control"><option>مطابق للرصيد</option><option>يوجد عجز</option></select></div>
+            </div>
+          `;
+        }
+
+        return `
+          <form id="periodic-reading-form" class="card" style="border:2px solid var(--water-600);display:flex;flex-direction:column;gap:14px;">
+            <div class="interval-tabs">
+              ${tabs.map(tb => `<button type="button" class="interval-tab-btn ${curTab === tb.id ? 'active' : ''}" data-action="set-interval-tab" data-tab="${tb.id}">${tb.label}</button>`).join("")}
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+              <div>
+                <label class="form-label">المحطة *</label>
+                ${lockStation
+                  ? `<input type="text" value="${activeSt.code} — ${activeSt.name}" readonly class="form-control" style="background:#f1f5f9;font-weight:800;"/><input type="hidden" id="f-stn-select" value="${activeSt.code}"/>`
+                  : `<select id="f-stn-select" class="form-control" style="font-weight:800;">${state.data.stations.map(s => `<option value="${s.code}" ${s.code === activeSt.code ? "selected" : ""}>${s.code} — ${s.name}</option>`).join("")}</select>`
+                }
+              </div>
+              <div>
+                <label class="form-label">القائم بالتسجيل</label>
+                <input type="text" id="f-op-name" value="${operatorName}" ${lockStation ? "readonly" : ""} class="form-control"/>
+                <input type="hidden" id="f-op-phone" value="${operatorPhone}"/>
+              </div>
+            </div>
+            ${fieldsHTML}
+            <div><label class="form-label">ملاحظات</label><input type="text" id="f-notes" placeholder="اكتب أي ملاحظات..." class="form-control"/></div>
+            <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:10px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;">
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <button type="button" class="btn btn-outline" style="font-size:12px;" data-action="capture-gps">📍 تحديد GPS</button>
+                <label class="btn btn-outline" style="font-size:12px;cursor:pointer;">📷 صورة العداد<input type="file" accept="image/*" id="f-photo-input" style="display:none;" /></label>
+                <button type="button" class="btn btn-outline" style="font-size:12px;color:#64748b;" data-action="skip-gps-photo">⏭️ تخطي</button>
+              </div>
+              <div id="gps-photo-status" style="font-size:11.5px;color:var(--water-600);font-weight:700;">اختياري (يمكن التخطي)</div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">✓ حفظ وإرسال القراءة فوراً</button>
+          </form>
+        `;
+      }
+
+      function recalcBiHourly() {
+        const ffEl = document.getElementById("bh-feed-flow");
+        if (!ffEl) return;
+        const ff = Number(ffEl.value) || 0;
+        const pf = Number(document.getElementById("bh-prod-flow").value) || 0;
+        const ftds = Number(document.getElementById("bh-feed-tds").value) || 0;
+        const ptds = Number(document.getElementById("bh-prod-tds").value) || 0;
+        const stCode = document.getElementById("f-stn-select").value;
+        const st = state.data.stations.find(s => s.code === stCode) || state.data.stations[0];
+
+        const rec = ff > 0 ? Math.min(99, (pf / ff) * 100) : 0;
+        const rejFlow = Math.max(0, ff - pf);
+        const recFrac = rec / 100;
+        const rejTds = (recFrac > 0 && recFrac < 0.99) ? Math.round((ftds - (ptds * recFrac)) / (1 - recFrac)) : 0;
+
+        document.getElementById("auto-rec-val").textContent = rec.toFixed(1) + "%";
+        document.getElementById("auto-rej-flow").textContent = rejFlow.toFixed(1) + " m³/h";
+        document.getElementById("auto-rej-tds").textContent = rejTds.toLocaleString() + " ppm";
+
+        const vBox = document.getElementById("vessel-alert-box");
+        if (vBox) vBox.classList.toggle("hidden", ptds <= Number(st.maxTdsLimit));
+      }
+
+      function recalcDaily8AM() {
+        const currEl = document.getElementById("d8-curr");
+        if (!currEl) return;
+        const prev = Number(document.getElementById("d8-prev").value) || 0;
+        const curr = Number(currEl.value) || 0;
+        const kwh = Number(document.getElementById("d8-kwh").value) || 0;
+        const stCode = document.getElementById("f-stn-select").value;
+        const st = state.data.stations.find(s => s.code === stCode) || state.data.stations[0];
+        const net = Math.max(0, curr - prev);
+        document.getElementById("d8-net-prod").textContent = net.toLocaleString() + " م³";
+        document.getElementById("d8-pct").textContent = (st.capacity > 0 ? ((net / st.capacity) * 100).toFixed(1) : "0") + "%";
+        document.getElementById("d8-sec").textContent = (net > 0 ? (kwh / net).toFixed(2) : "0.00") + " kWh/m³";
+      }
+
+      function renderReadingsFeed(list, isOperatorView) {
+        if (!list.length) return `<p style="font-size:13px;color:#64748b;text-align:center;padding:16px;">لا توجد قراءات مسجلة بعد.</p>`;
+        const FIFTEEN_MINS = 15 * 60 * 1000;
+        return `
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            ${list.map(r => {
+              const lockTime = Number(r.createdAt || 0) + FIFTEEN_MINS;
+              const canOpEdit = isOperatorView && (Date.now() < lockTime);
+              return `
+                <div style="border:1px solid ${r.outOfSpec ? '#fecaca' : '#e2e8f0'};background:${r.outOfSpec ? 'var(--red-50)' : '#f8fafc'};border-radius:12px;padding:12px 14px;">
+                  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+                    <div><span class="badge badge-navy">${r.stationCode}</span> <b>${r.stationName}</b> • <span style="font-size:11.5px;color:var(--water-600);font-weight:700;">${r.intervalType}</span></div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <span style="font-size:11.5px;color:#64748b;">${r.timeLabel} • ${r.operatorName}</span>
+                      ${canOpEdit ? `<button type="button" class="btn btn-amber" style="padding:4px 10px;font-size:11px;" data-action="edit-reading" data-id="${r.id}">✏️ تعديل (<span data-countdown-end="${lockTime}">15:00</span>)</button>` : isOperatorView ? `<span style="font-size:11px;color:#94a3b8;">🔒 مقفل</span>` : ""}
+                    </div>
+                  </div>
+                  <div style="font-size:13px;font-weight:700;">${r.summary}</div>
+                  ${r.vesselReadings && r.vesselReadings.length ? `<div style="margin-top:4px;font-size:12px;color:var(--red-600);font-weight:700;">قراءات الفيازل: ${r.vesselReadings.map((v, idx) => `V${idx + 1}: ${v} ppm`).join(" | ")}</div>` : ""}
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      // 6. AI OPERATIONS & DECISION COPILOT
+      function generateAiInsights() {
+        const stns = state.data.stations;
+        const highTdsStns = stns.filter(s => Number(s.productTds) > Number(s.maxTdsLimit) && s.status !== "OFFLINE");
+        const offlineStns = stns.filter(s => s.status === "OFFLINE");
+        const highCostStns = [...stns].sort((a, b) => (b.chemCostPerM3 + b.powerCostPerM3) - (a.chemCostPerM3 + a.powerCostPerM3)).slice(0, 2);
+
+        return {
+          cipAlerts: highTdsStns.length
+            ? highTdsStns.map(s => `محطة <b>${s.name} (${s.code})</b> سجلت أملاح منتج <b>${s.productTds} ppm</b> (أعلى من الحد ${s.maxTdsLimit} ppm) — يوصى بفحص فيزل 3 وعمل غسيل كيميائي (CIP).`).join("<br/>")
+            : "جميع المحطات النشطة تعمل ضمن حدود أملاح المنتج المسموحة.",
+          downtimeAlerts: offlineStns.length
+            ? offlineStns.map(s => `محطة <b>${s.name} (${s.code})</b> متوقفة حالياً — خسارة إنتاجية يومية تقدر بـ <b>${s.capacity} م³/يوم</b> (${Math.round(s.capacity * s.pricePerM3).toLocaleString()} ج.م/يوم). الأولوية القصوى لإنهاء صيانة السيل الميكانيكي.`).join("<br/>")
+            : "لا توجد أي محطات متوقفة حالياً.",
+          costInsights: `أعلى محطتين في تكلفة المتر المكعب (كيماويات + طاقة) هما: <b>${highCostStns[0].name}</b> (${(highCostStns[0].chemCostPerM3 + highCostStns[0].powerCostPerM3).toFixed(1)} ج.م/م³) و<b>${highCostStns[1].name}</b> — يوصى بمراجعة ضغط المضخات وجرعة الـ Antiscalant.`
+        };
+      }
+
+      function computeAiAnswer(question) {
+        const q = String(question || "").toLowerCase();
+        const stns = state.data.stations;
+        const totalProd = stns.reduce((a, b) => a + Number(b.currentProduction || 0), 0);
+        const totalCap = stns.reduce((a, b) => a + Number(b.capacity || 0), 0);
+        const ins = generateAiInsights();
+
+        if (q.includes("غسيل") || q.includes("ممبرين") || q.includes("املاح") || q.includes("أملاح") || q.includes("cip") || q.includes("tds")) {
+          return "🧪 <b>تحليل جودة المياه والأغشية:</b><br/>" + ins.cipAlerts;
+        }
+        if (q.includes("عطل") || q.includes("متوقف") || q.includes("صيانة") || q.includes("توقف")) {
+          return "🛠️ <b>تحليل الأعطال والتوقفات الحرجة:</b><br/>" + ins.downtimeAlerts;
+        }
+        if (q.includes("ربح") || q.includes("تكلفة") || q.includes("مالي") || q.includes("فاتورة") || q.includes("سعر")) {
+          return "💰 <b>التحليل المالي وتحسين الربحية:</b><br/>" + ins.costInsights;
+        }
+        return `📊 <b>الملخص الذكي اللحظي لشركة ستى ووتر:</b><br/>
+        • إجمالي الإنتاج الحالي: <b>${totalProd.toLocaleString()} م³/يوم</b> من أصل <b>${totalCap.toLocaleString()} م³/يوم</b> (${((totalProd/totalCap)*100).toFixed(1)}%).<br/>
+        • ${ins.cipAlerts}<br/>
+        • ${ins.downtimeAlerts}`;
+      }
+
+      function viewAiCopilot() {
+        const ins = generateAiInsights();
+        const quickPrompts = [
+          "ما هي المحطات التي تحتاج غسيل ممبرين أو مراجعة أملاح؟",
+          "لخّص موقف الإنتاج والأعطال الحرجة اليوم",
+          "تحليل الربحية وأعلى المحطات تكلفة للمتر المكعب"
+        ];
+
+        return `
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div style="background:linear-gradient(135deg, #1e1b4b, var(--navy-900));color:#fff;border-radius:18px;padding:20px;border:1px solid rgba(124,58,237,0.45);">
+              <h2 style="font-size:20px;font-weight:800;">🤖 مساعد الذكاء الاصطناعي لدعم القرار (CITY WATER AI Copilot)</h2>
+              <p style="font-size:12.5px;color:#cbd5e1;margin-top:4px;">محرك تحليل ذكي مدمج يراقب قراءات المحطات الـ 12 ويتنبأ بالحاجة للغسيل الكيميائي (CIP) ويحلل الربحية لحظياً</p>
+            </div>
+
+            <div class="kpi-grid">
+              <div class="kpi-card red"><span style="font-size:12px;font-weight:800;color:var(--red-600);">تنبؤ الغسيل الكيميائي (CIP)</span><p style="font-size:12.5px;margin-top:6px;">${ins.cipAlerts}</p></div>
+              <div class="kpi-card amber"><span style="font-size:12px;font-weight:800;color:var(--amber-600);">تأثير التوقفات المالي</span><p style="font-size:12.5px;margin-top:6px;">${ins.downtimeAlerts}</p></div>
+              <div class="kpi-card purple"><span style="font-size:12px;font-weight:800;color:var(--purple-600);">تحسين تكلفة المتر المكعب</span><p style="font-size:12.5px;margin-top:6px;">${ins.costInsights}</p></div>
+            </div>
+
+            <div class="card" style="display:flex;flex-direction:column;gap:12px;">
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                ${quickPrompts.map(p => `<button type="button" class="btn btn-outline" style="font-size:12px;border-color:#c4b5fd;color:#5b21b6;" data-action="ai-quick-ask" data-q="${p}">${p}</button>`).join("")}
+              </div>
+
+              <div id="ai-chat-feed" class="ai-chat-box">
+                ${state.aiMessages.map(m => `<div class="ai-msg ${m.sender}">${m.text}</div>`).join("")}
+              </div>
+
+              <form id="ai-chat-form" style="display:flex;gap:8px;">
+                <input type="text" id="ai-user-input" placeholder="اكتب سؤالك للمساعد الذكي عن أي محطة أو قراءة أو تكلفة..." required class="form-control" />
+                <button type="submit" class="btn btn-purple">إرسال ←</button>
+              </form>
+            </div>
+          </div>
+        `;
+      }
+
+      // 7. ENGINEERING DESIGN, TECHNICAL PROPOSALS & CONTRACTS
+      function viewDesignAndContracts() {
+        return `
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div>
+              <h2 style="font-size:20px;font-weight:800;color:var(--navy-900);">📐 التصميم الهندسي، العروض الفنية والمالية، والعقود</h2>
+              <p style="font-size:12.5px;color:#64748b;">تصميم محطات RO جديدة وحساب مكوناتها تلقائياً + متابعة العروض الفنية والمالية + سجل العقود والضمانات</p>
+            </div>
+
+            <!-- RO PLANT SIZING CALCULATOR -->
+            <div class="card" style="border:2px solid var(--water-600);display:flex;flex-direction:column;gap:14px;">
+              <h3 style="font-size:16px;font-weight:800;color:var(--navy-900);">⚙️ حاسبة تصميم محطات التحلية السريعة (RO Plant Sizing)</h3>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;">
+                <div><label class="form-label">نوع المحطة</label><select id="des-type" class="form-control"><option value="SWRO">تحلية مياه بحر (SWRO)</option><option value="BWRO">تحلية مياه آبار (BWRO)</option></select></div>
+                <div><label class="form-label">الإنتاج المطلوب (م³/يوم)</label><input type="number" id="des-cap" value="1000" class="form-control" style="font-weight:800;"/></div>
+                <div><label class="form-label">أملاح المياه الخام (TDS ppm)</label><input type="number" id="des-tds" value="40000" class="form-control"/></div>
+                <div><label class="form-label">نسبة الاستخلاص (Recovery %)</label><input type="number" id="des-rec" value="42" class="form-control"/></div>
+              </div>
+
+              <div style="background:var(--navy-900);color:#fff;border-radius:14px;padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;text-align:center;">
+                <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">تدفق الفيد المطلوب</span><b id="des-out-feed" style="font-size:17px;">99.2 m³/h</b></div>
+                <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">عدد الأغشية (8" Elements)</span><b id="des-out-mem" style="font-size:17px;color:#34d399;">60 غشاء</b></div>
+                <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">عدد الفيازل (6-Elem Vessels)</span><b id="des-out-ves" style="font-size:17px;">10 فيازل</b></div>
+                <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">قدرة طلمبة الضغط العالي</span><b id="des-out-kw" style="font-size:17px;color:#fbbf24;">185 kW</b></div>
+                <div><span style="font-size:10.5px;color:var(--cyan-400);display:block;">التكلفة التقديرية (CapEx)</span><b id="des-out-cost" style="font-size:17px;color:#38bdf8;">9,500,000 ج.م</b></div>
+              </div>
+
+              <div style="display:flex;justify-content:flex-end;">
+                <button type="button" class="btn btn-primary" data-action="save-design-as-proposal">+ حفظ التصميم كعرض فني ومالي جديد</button>
+              </div>
+            </div>
+
+            <!-- TECHNICAL & COMMERCIAL PROPOSALS -->
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <h3 style="font-size:15.5px;font-weight:800;">سجل العروض الفنية والمالية والمناقصات (${state.data.proposals.length})</h3>
+                <button type="button" class="btn btn-outline" style="font-size:12px;" data-action="open-new-proposal">+ إضافة عرض فني يدوياً</button>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead><tr><th>رقم العرض</th><th>العميل والمشروع</th><th>السعة</th><th>القيمة التقديرية</th><th>الحالة</th><th>طباعة عرض رسمي</th></tr></thead>
+                  <tbody>
+                    ${state.data.proposals.map(p => `
+                      <tr>
+                        <td><b>${p.id}</b><div style="font-size:11px;color:#64748b;">${p.date}</div></td>
+                        <td><b>${p.client}</b><div style="font-size:12px;color:#475569;">${p.project}</div></td>
+                        <td><b>${Number(p.capacity).toLocaleString()} م³/يوم</b></td>
+                        <td><b style="color:var(--green-600);">${Number(p.valueEgp).toLocaleString()} ج.م</b></td>
+                        <td>${badgeHTML(p.status)}</td>
+                        <td><button type="button" class="btn btn-navy" style="padding:4px 10px;font-size:11px;" data-action="print-proposal-offer" data-id="${p.id}">🖨️ طباعة العرض A4</button></td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- CONTRACTS & WARRANTIES REGISTER -->
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <h3 style="font-size:15.5px;font-weight:800;">سجل العقود والضمانات الجارية (${state.data.contracts.length})</h3>
+                <button type="button" class="btn btn-outline" style="font-size:12px;" data-action="open-new-contract">+ إضافة عقد جديد</button>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead><tr><th>رقم العقد</th><th>العميل ونطاق العمل</th><th>القيمة الشهرية</th><th>تاريخ الانتهاء / الضمان</th><th>الحالة</th></tr></thead>
+                  <tbody>
+                    ${state.data.contracts.map(c => `
+                      <tr>
+                        <td><b>${c.id}</b></td>
+                        <td><b>${c.client}</b><div style="font-size:12px;color:#475569;">${c.scope}</div></td>
+                        <td><b style="color:var(--water-600);">${Number(c.monthlyValue).toLocaleString()} ج.م/شهر</b></td>
+                        <td>${c.endDate}</td>
+                        <td>${badgeHTML(c.status)}</td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function calcRoPlantSizing() {
+        const capEl = document.getElementById("des-cap");
+        if (!capEl) return;
+        const type = document.getElementById("des-type").value;
+        const cap = Number(capEl.value) || 1000;
+        const rec = Number(document.getElementById("des-rec").value) || (type === "SWRO" ? 42 : 75);
+        const prodFlow = cap / 24;
+        const feedFlow = prodFlow / (rec / 100);
+        const flux = type === "SWRO" ? 13.5 : 22;
+        const elements = Math.max(6, Math.ceil((prodFlow * 1000) / (flux * 37)));
+        const vessels = Math.ceil(elements / 6);
+        const pressure = type === "SWRO" ? 62 : 16;
+        const kw = Math.round((feedFlow * pressure) / (36 * 0.78));
+        const estCost = cap * (type === "SWRO" ? 9500 : 3800);
+
+        document.getElementById("des-out-feed").textContent = feedFlow.toFixed(1) + " m³/h";
+        document.getElementById("des-out-mem").textContent = (vessels * 6) + " غشاء (8\")";
+        document.getElementById("des-out-ves").textContent = vessels + " فيزل";
+        document.getElementById("des-out-kw").textContent = kw + " kW";
+        document.getElementById("des-out-cost").textContent = Math.round(estCost).toLocaleString() + " ج.م";
+      }
+
+      // 8. LAB, MAINTENANCE, INVENTORY, WORKFORCE, FINANCE
+      function viewLaboratory() {
+        return `
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h2 style="font-size:20px;font-weight:800;">جودة المياه والمعمل (LIMS)</h2>
+              <button type="button" class="btn btn-primary" data-action="open-new-sample">+ تسجيل عينة</button>
+            </div>
+            <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>العينة</th><th>المحطة</th><th>pH</th><th>TDS</th><th>العكارة</th><th>الحالة</th><th>ملاحظات</th></tr></thead><tbody>
+              ${state.data.labSamples.map(s => `<tr><td><b>${s.id}</b></td><td><b>${s.stationCode}</b> • ${s.point}</td><td>${s.ph}</td><td><b>${s.tds}</b></td><td>${s.turbidity}</td><td>${badgeHTML(s.status)}</td><td>${s.notes}</td></tr>`).join("")}
+            </tbody></table></div></div>
+          </div>
+        `;
+      }
+
+      function viewMaintenance() {
+        return `
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h2 style="font-size:20px;font-weight:800;">الصيانة وأوامر الشغل (CMMS)</h2>
+              <button type="button" class="btn btn-amber" data-action="open-new-wo">+ أمر شغل صيانة</button>
+            </div>
+            <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>الأمر</th><th>المحطة والمعدة</th><th>الأولوية</th><th>الوصف</th><th>المسؤول</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>
+              ${state.data.workOrders.map(w => `<tr><td><b>${w.id}</b></td><td><b>${w.stationCode}</b> — ${w.equipment}</td><td>${badgeHTML(w.priority)}</td><td>${w.problem}</td><td>${w.assignedTo}</td><td>${badgeHTML(w.status)}</td><td>${w.status !== "COMPLETED" ? `<button type="button" class="btn btn-emerald" style="padding:4px 9px;font-size:11px;" data-action="complete-wo" data-id="${w.id}">إغلاق</button>` : "✓"}</td></tr>`).join("")}
+            </tbody></table></div></div>
+          </div>
+        `;
+      }
+
+      function viewInventory() {
+        return `
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h2 style="font-size:20px;font-weight:800;">المخازن وطلبات الصرف (ROG)</h2>
+              <button type="button" class="btn btn-primary" data-action="open-new-rog">+ طلب صرف بضاعة (ROG)</button>
+            </div>
+            <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>الصنف</th><th>الرصيد</th><th>الحد الأدنى</th><th>الصلاحية</th><th>الحالة</th></tr></thead><tbody>
+              ${state.data.inventory.map(i => `<tr><td><b>${i.code}</b> — ${i.name}</td><td><b>${i.stock} ${i.unit}</b></td><td>${i.minStock}</td><td>${i.expiry}</td><td>${badgeHTML(i.stock <= i.minStock ? "LOW STOCK" : "NORMAL")}</td></tr>`).join("")}
+            </tbody></table></div></div>
+            <div class="card"><h3 style="font-size:15px;font-weight:800;margin-bottom:10px;">طلبات الصرف للمحطات (ROG)</h3><div class="table-wrap"><table class="data-table"><thead><tr><th>رقم الطلب</th><th>المحطة</th><th>الصنف</th><th>الكمية</th><th>الحالة</th><th>اعتماد</th></tr></thead><tbody>
+              ${state.data.rogRequests.map(r => `<tr><td><b>${r.id}</b></td><td>${r.stationCode}</td><td>${r.itemName}</td><td>${r.qty}</td><td>${badgeHTML(r.status)}</td><td>${r.status === "PENDING" ? `<button type="button" class="btn btn-emerald" style="padding:4px 9px;font-size:11px;" data-action="approve-rog" data-id="${r.id}">اعتماد</button>` : "✓"}</td></tr>`).join("")}
+            </tbody></table></div></div>
+          </div>
+        `;
+      }
+
+      function viewWorkforce() {
+        return `
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h2 style="font-size:20px;font-weight:800;">المشغلين وفريق العمل — ستى ووتر</h2>
+              <button type="button" class="btn btn-primary" data-action="open-add-operator">+ إضافة مشغل</button>
+            </div>
+            <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>اسم المشغل</th><th>المحطة</th><th>الوردية</th><th>رقم الهاتف (الدخول)</th><th>تواصل</th><th>تعديل</th></tr></thead><tbody>
+              ${state.data.operators.map(op => `<tr><td><b>${op.name}</b></td><td><span class="badge badge-navy">${op.stationCode}</span> ${op.stationGroup}</td><td>${op.shift}</td><td style="direction:ltr;"><b>${op.phone}</b></td><td><a href="tel:${op.phone}" class="btn btn-outline" style="padding:3px 8px;font-size:11px;text-decoration:none;">📞</a> <a href="https://wa.me/2${op.phone}" target="_blank" class="btn btn-emerald" style="padding:3px 8px;font-size:11px;text-decoration:none;">واتساب</a></td><td><button type="button" class="btn btn-outline" style="padding:3px 8px;font-size:11px;" data-action="edit-operator" data-id="${op.id}">✏️</button></td></tr>`).join("")}
+            </tbody></table></div></div>
+          </div>
+        `;
+      }
+
+      function viewFinance() {
+        let totalRev = 0;
+        const rows = state.data.stations.map(st => {
+          const vol = Number(st.currentProduction || 0) * 30;
+          const rev = vol * Number(st.pricePerM3 || 10);
+          totalRev += rev;
+          return { st, vol, rev };
+        });
+        return `
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h2 style="font-size:20px;font-weight:800;">الفواتير الشهرية والتكلفة المالية (${Math.round(totalRev).toLocaleString()} ج.م)</h2>
+              <button type="button" class="btn btn-navy" data-action="print-report">🖨️ طباعة كشف الفواتير A4</button>
+            </div>
+            <div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>المحطة</th><th>الإنتاج الشهري</th><th>سعر المتر</th><th>إجمالي الفاتورة</th><th>تعديل السعر</th></tr></thead><tbody>
+              ${rows.map(r => `<tr><td><b>${r.st.code}</b> — ${r.st.name}</td><td>${r.vol.toLocaleString()} م³</td><td><b>${r.st.pricePerM3} ج.م</b></td><td style="color:var(--green-600);font-weight:800;">${Math.round(r.rev).toLocaleString()} ج.م</td><td><button type="button" class="btn btn-outline" style="padding:4px 9px;font-size:11px;" data-action="edit-price" data-id="${r.st.id}">✏️ تعديل</button></td></tr>`).join("")}
+            </tbody></table></div></div>
+          </div>
+        `;
+      }
+
+      // 9. ENHANCED BRANDED A4 REPORTS (WITH COMPANY LOGO + DEVELOPER CREDIT)
+      function viewReports() {
+        const stns = state.reportStation === "ALL" ? state.data.stations : state.data.stations.filter(s => s.code === state.reportStation);
+        const totalProd = stns.reduce((a, b) => a + Number(b.currentProduction || 0), 0);
+        const totalRev = stns.reduce((a, b) => a + (Number(b.currentProduction || 0) * 30 * Number(b.pricePerM3 || 10)), 0);
+
+        let bodyTable = "";
+        let reportTitle = "تقرير التشغيل اليومي لمحطات التحلية ومعالجة المياه";
+
+        if (state.reportType === "INVOICES") {
+          reportTitle = "بيان الفواتير الشهرية والمستحقات المالية للمحطات";
+          bodyTable = `
+            <table class="data-table">
+              <thead><tr><th>الكود</th><th>المحطة</th><th>الإنتاج الشهري (م³)</th><th>سعر المتر (ج.م)</th><th>إجمالي الفاتورة الشهرية (ج.م)</th></tr></thead>
+              <tbody>${stns.map(s => `<tr><td><b>${s.code}</b></td><td><b>${s.name}</b></td><td>${(s.currentProduction * 30).toLocaleString()}</td><td>${s.pricePerM3}</td><td><b>${Math.round(s.currentProduction * 30 * s.pricePerM3).toLocaleString()} ج.م</b></td></tr>`).join("")}</tbody>
+            </table>
+          `;
+        } else if (state.reportType === "EQUIPMENT") {
+          reportTitle = "تقرير حصر المكونات والمعدات الفنية بالمحطات";
+          bodyTable = `
+            <table class="data-table">
+              <thead><tr><th>المحطة</th><th>كود المعدة</th><th>اسم المعدة</th><th>الماركة / الموديل</th><th>المواصفات</th><th>الحالة</th></tr></thead>
+              <tbody>${stns.flatMap(s => (s.layoutNodes || []).map(nd => `<tr><td><b>${s.name}</b></td><td>${nd.tag}</td><td><b>${nd.name}</b></td><td>${nd.brand}</td><td>${nd.specs}</td><td>${nd.status}</td></tr>`)).join("")}</tbody>
+            </table>
+          `;
+        } else {
+          bodyTable = `
+            <table class="data-table">
+              <thead><tr><th>الكود</th><th>المحطة</th><th>الموقع</th><th>الحالة</th><th>السعة</th><th>إنتاج اليوم</th><th>الاستخلاص</th><th>TDS المنتج</th></tr></thead>
+              <tbody>${stns.map(s => `<tr><td><b>${s.code}</b></td><td><b>${s.name}</b></td><td>${s.location}</td><td>${s.status}</td><td>${s.capacity}</td><td><b>${s.currentProduction}</b></td><td>${s.recovery}%</td><td>${s.productTds} ppm</td></tr>`).join("")}</tbody>
+            </table>
+          `;
+        }
+
+        return `
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="card no-print" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <select id="rep-type-select" class="form-control" style="width:auto;font-weight:700;">
+                  <option value="DAILY_OPS" ${state.reportType === "DAILY_OPS" ? "selected" : ""}>تقرير التشغيل اليومي</option>
+                  <option value="INVOICES" ${state.reportType === "INVOICES" ? "selected" : ""}>تقرير الفواتير الشهرية</option>
+                  <option value="EQUIPMENT" ${state.reportType === "EQUIPMENT" ? "selected" : ""}>تقرير المكونات والمعدات</option>
+                </select>
+                <select id="rep-stn-filter" class="form-control" style="width:auto;font-weight:700;">
+                  <option value="ALL">جميع المحطات (12 محطة)</option>
+                  ${state.data.stations.map(s => `<option value="${s.code}" ${state.reportStation === s.code ? "selected" : ""}>${s.code} — ${s.name}</option>`).join("")}
+                </select>
+              </div>
+              <button type="button" class="btn btn-navy" data-action="print-report">🖨️ طباعة التقرير الرسمي A4</button>
+            </div>
+
+            <div id="printable-report-area" class="card" style="max-width:980px;margin:0 auto;width:100%;padding:30px;">
+              <!-- OFFICIAL CITY WATER REPORT HEADER -->
+              <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--navy-900);padding-bottom:16px;margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:14px;">
+                  ${getLogoHTMLForReport()}
+                  <div>
+                    <div style="font-size:20px;font-weight:800;color:var(--navy-900);">${state.data.companyName}</div>
+                    <div style="font-size:11.5px;color:#475569;font-weight:700;">${state.data.companyTagline}</div>
+                    <div style="font-size:13px;color:var(--water-600);font-weight:800;margin-top:4px;">${reportTitle}</div>
+                  </div>
+                </div>
+                <div style="text-align:end;font-size:12px;">
+                  <div>تاريخ الإصدار: <b>${new Date().toLocaleDateString("ar-EG")}</b></div>
+                  <div>إجمالي الإنتاج: <b>${totalProd.toLocaleString()} م³/يوم</b></div>
+                  <div>القيمة الشهرية: <b>${Math.round(totalRev).toLocaleString()} ج.م</b></div>
+                </div>
+              </div>
+
+              <div class="table-wrap" style="margin-bottom:28px;">
+                ${bodyTable}
+              </div>
+
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:26px;text-align:center;font-size:12px;">
+                <div><div style="border-top:1px solid #94a3b8;padding-top:6px;font-weight:700;">مدير الصيانة (م. فهد طلب)</div></div>
+                <div><div style="border-top:1px solid #94a3b8;padding-top:6px;font-weight:700;">مدير العمليات (د. محمد محروس مختار)</div></div>
+                <div><div style="border-top:1px solid #94a3b8;padding-top:6px;font-weight:700;">اعتماد المدير العام (م. عبدالله خضر)</div></div>
+              </div>
+
+              <div style="margin-top:24px;padding-top:10px;border-top:1px dashed #cbd5e1;text-align:center;font-size:10.5px;color:#64748b;font-weight:700;">
+                City Water (ستى ووتر) — تم التصميم والتطوير بواسطة: د. محمد محروس مختار | Designed & Developed by Dr. Mohamed Mahrous Mokhtar
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 10. ADMIN & COMPANY LOGO / PIN SETTINGS
+      function viewAdmin() {
+        return `
+          <div style="display:flex;flex-direction:column;gap:18px;max-width:860px;">
+            <div>
+              <h2 style="font-size:20px;font-weight:800;color:var(--navy-900);">⚙️ إعدادات هوية الشركة (الشعار) وأرقام الدخول السرية</h2>
+              <p style="font-size:12.5px;color:#64748b;">ارفع شعار شركة City Water الرسمي ليظهر في الشاشة الرئيسية والتقارير المطبوعة A4، أو عدّل أرقام PIN</p>
+            </div>
+
+            <div class="card" style="border:2px solid var(--water-600);display:flex;flex-direction:column;gap:14px;">
+              <h3 style="font-size:16px;font-weight:800;">🖼️ شعار شركة CITY WATER — ستى ووتر</h3>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;">
+                <div style="width:90px;height:90px;border-radius:16px;border:2px solid #cbd5e1;padding:6px;background:#fff;display:flex;align-items:center;justify-content:center;">
+                  ${getLogoHTMLForReport()}
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <label class="btn btn-primary" style="cursor:pointer;">
+                    📤 رفع صورة شعار الشركة (PNG / JPG / SVG)
+                    <input type="file" accept="image/*" id="upload-company-logo" style="display:none;" />
+                  </label>
+                  ${state.data.customLogoDataUrl ? `<button type="button" class="btn btn-outline" style="font-size:12px;" data-action="reset-company-logo">استعادة الشعار الافتراضي</button>` : ""}
+                </div>
+              </div>
+            </div>
+
+            <form id="admin-pins-form" class="card" style="display:flex;flex-direction:column;gap:12px;">
+              <h3 style="font-size:16px;font-weight:800;">🔒 تعديل الأرقام السرية (PIN) للإدارة</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div><label class="form-label">الرقم السري للمدير العام (CEO)</label><input type="text" id="set-ceo-pin" value="${state.data.ceoPin || '2026'}" required class="form-control"/></div>
+                <div><label class="form-label">الرقم السري لمدير العمليات</label><input type="text" id="set-mgr-pin" value="${state.data.mgrPin || '2026'}" required class="form-control"/></div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;">
+                <button type="submit" class="btn btn-navy">حفظ الإعدادات ومزامنتها</button>
+              </div>
+            </form>
+          </div>
+        `;
+      }
+
+      // ----------------------------------------------------------------------
+      // G. MODALS & INTERACTIVE HANDLERS
+      // ----------------------------------------------------------------------
+      function openModal(html) {
+        document.getElementById("global-modal-card").innerHTML = html;
+        document.getElementById("global-modal").classList.remove("hidden");
+      }
+
+      function closeModal() {
+        document.getElementById("global-modal").classList.add("hidden");
+      }
+
+      function openPinModal(targetRole) {
+        const title = targetRole === "CEO" ? "دخول المدير العام (م. عبدالله خضر)" : "دخول مدير العمليات (د. محمد محروس)";
+        openModal(`
+          <div style="background:var(--navy-900);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;">
+            <h3 style="font-size:16px;font-weight:800;">🔒 ${title}</h3>
+            <button type="button" data-action="close-modal" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;">✕</button>
+          </div>
+          <form id="pin-verify-form" data-target-role="${targetRole}" style="padding:22px;display:flex;flex-direction:column;gap:14px;">
+            <p style="font-size:13px;color:#475569;">أدخل الرقم السري (PIN) للوصول إلى لوحة القيادة (الافتراضي: <b>2026</b>):</p>
+            <input type="password" id="entered-pin-input" placeholder="••••" required autofocus class="form-control" style="font-size:20px;font-weight:800;text-align:center;letter-spacing:6px;" />
+            <div style="display:flex;justify-content:flex-end;gap:8px;">
+              <button type="button" class="btn btn-outline" data-action="close-modal">إلغاء</button>
+              <button type="submit" class="btn btn-primary">دخول ←</button>
+            </div>
+          </form>
+        `);
+      }
+
+      function openOperatorLoginModal() {
+        openModal(`
+          <div style="background:var(--navy-900);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;">
+            <h3 style="font-size:16px;font-weight:800;">📱 تسجيل دخول مشغل المحطة</h3>
+            <button type="button" data-action="close-modal" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;">✕</button>
+          </div>
+          <form id="operator-phone-login-form" style="padding:22px;display:flex;flex-direction:column;gap:14px;">
+            <p style="font-size:13px;color:#475569;">أدخل <b>رقم هاتفك المسجل</b> للدخول إلى محطتك فقط:</p>
+            <input type="tel" id="login-op-phone" placeholder="010xxxxxxxx" required autofocus class="form-control" style="font-size:16px;font-weight:800;direction:ltr;text-align:center;" />
+            <div style="display:flex;justify-content:flex-end;gap:8px;">
+              <button type="button" class="btn btn-outline" data-action="close-modal">إلغاء</button>
+              <button type="submit" class="btn btn-emerald">دخول إلى محطتي ←</button>
+            </div>
+          </form>
+        `);
+      }
+
+      function openInspectNodeModal(stCode, nodeId) {
+        const st = state.data.stations.find(s => s.code === stCode);
+        if (!st) return;
+        const nd = (st.layoutNodes || []).find(n => n.id === nodeId);
+        if (!nd) return;
+
+        openModal(`
+          <div style="background:var(--navy-900);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;">
+            <h3 style="font-size:16px;font-weight:800;">⚙️ بطاقة المعدة على المخطط: ${nd.name} (${nd.tag})</h3>
+            <button type="button" data-action="close-modal" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;">✕</button>
+          </div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:16px;">
+            <form id="edit-layout-node-form" data-stn="${st.code}" data-node="${nd.id}" style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:grid;grid-template-columns:1fr 2fr;gap:10px;">
+                <div><label class="form-label">كود المعدة (Tag)</label><input type="text" id="nd-tag" value="${nd.tag}" required class="form-control"/></div>
+                <div><label class="form-label">اسم المعدة</label><input type="text" id="nd-name" value="${nd.name}" required class="form-control"/></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div><label class="form-label">الماركة (Brand)</label><input type="text" id="nd-brand" value="${nd.brand}" class="form-control"/></div>
+                <div><label class="form-label">الموديل / السيريال</label><input type="text" id="nd-model" value="${nd.model}" class="form-control"/></div>
+              </div>
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;">
+                <div><label class="form-label">المواصفات الفنية</label><input type="text" id="nd-specs" value="${nd.specs}" class="form-control"/></div>
+                <div>
+                  <label class="form-label">الحالة التشغيلية</label>
+                  <select id="nd-status" class="form-control" style="font-weight:800;">
+                    <option value="OPERATIONAL" ${nd.status === "OPERATIONAL" ? "selected" : ""}>تعمل بكفاءة</option>
+                    <option value="WARNING" ${nd.status === "WARNING" ? "selected" : ""}>تحتاج متابعة</option>
+                    <option value="FAULT" ${nd.status === "FAULT" ? "selected" : ""}>عطل / متوقفة</option>
+                  </select>
+                </div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+                <button type="button" class="btn btn-danger" style="font-size:12px;" data-action="delete-layout-node" data-stn="${st.code}" data-node="${nd.id}">🗑️ حذف النقطة</button>
+                <button type="submit" class="btn btn-primary">حفظ بيانات المعدة</button>
+              </div>
+            </form>
+
+            <!-- EQUIPMENT MAINTENANCE & FAULT LOG -->
+            <div style="border-top:2px solid #e2e8f0;padding-top:14px;">
+              <h4 style="font-size:14px;font-weight:800;margin-bottom:8px;">🛠️ سجل الصيانات والأعطال الخاص بهذه المعدة (${(nd.history || []).length})</h4>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;max-height:140px;overflow-y:auto;">
+                ${(nd.history || []).map(h => `<div style="background:#f8fafc;border:1px solid #e2e8f0;padding:8px 10px;border-radius:8px;font-size:12px;"><b>${h.date} — ${h.type}:</b> ${h.note}</div>`).join("") || "<span style='font-size:12px;color:#64748b;'>لا توجد سجلات صيانة سابقة.</span>"}
+              </div>
+              <form id="add-node-history-form" data-stn="${st.code}" data-node="${nd.id}" style="display:flex;gap:8px;">
+                <select id="nd-hist-type" class="form-control" style="width:auto;"><option>صيانة وقائية</option><option>إصلاح عطل</option><option>تغيير قطع غيار</option></select>
+                <input type="text" id="nd-hist-note" placeholder="أضف تفاصيل الصيانة أو العطل على هذه المعدة..." required class="form-control"/>
+                <button type="submit" class="btn btn-emerald">+ إضافة</button>
+              </form>
+            </div>
+          </div>
+        `);
+      }
+
+      function openAddLayoutNodeModal(stCode, xPct, yPct) {
+        openModal(`
+          <div style="background:var(--navy-900);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;">
+            <h3 style="font-size:16px;font-weight:800;">+ إضافة نقطة معدة جديدة على مخطط ${stCode}</h3>
+            <button type="button" data-action="close-modal" style="background:none;border:none;color:#fff;cursor:pointer;">✕</button>
+          </div>
+          <form id="add-layout-node-form" data-stn="${stCode}" data-x="${xPct}" data-y="${yPct}" style="padding:20px;display:flex;flex-direction:column;gap:12px;">
+            <div style="display:grid;grid-template-columns:1fr 2fr;gap:10px;">
+              <div><label class="form-label">كود المعدة (Tag) *</label><input type="text" id="an-tag" placeholder="P-202" required class="form-control"/></div>
+              <div><label class="form-label">اسم المعدة *</label><input type="text" id="an-name" placeholder="طلمبة غسيل CIP" required class="form-control"/></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div><label class="form-label">الماركة</label><input type="text" id="an-brand" placeholder="Grundfos" class="form-control"/></div>
+              <div><label class="form-label">الموديل</label><input type="text" id="an-model" placeholder="CR 32-4" class="form-control"/></div>
+            </div>
+            <div><label class="form-label">المواصفات الفنية</label><input type="text" id="an-specs" placeholder="تدفق 30 م³/ساعة • ضغط 4 بار" class="form-control"/></div>
+            <div style="display:flex;justify-content:flex-end;gap:8px;"><button type="button" class="btn btn-outline" data-action="close-modal">إلغاء</button><button type="submit" class="btn btn-primary">إضافة للمخطط</button></div>
+          </form>
+        `);
+      }
+
+      // ----------------------------------------------------------------------
+      // H. GLOBAL EVENT DELEGATION
+      // ----------------------------------------------------------------------
+      document.addEventListener("click", function (e) {
+        // Click directly on empty P&ID canvas to add a node at exact X,Y %
+        const pidCanvas = document.getElementById("pid-canvas");
+        if (pidCanvas && e.target === pidCanvas) {
+          const rect = pidCanvas.getBoundingClientRect();
+          const xPct = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+          const yPct = Math.round(((e.clientY - rect.top) / rect.height) * 100);
+          openAddLayoutNodeModal(pidCanvas.getAttribute("data-stn-code"), xPct, yPct);
+          return;
+        }
+
+        const btn = e.target.closest("[data-action]");
+        if (!btn) return;
+        const action = btn.getAttribute("data-action");
+
+        if (action === "open-pin-login") {
+          openPinModal(btn.getAttribute("data-target-role"));
+        } else if (action === "open-operator-login") {
+          openOperatorLoginModal();
+        } else if (action === "select-role") {
+          enterRole(btn.getAttribute("data-role"), null);
+        } else if (action === "show-gateway") {
+          state.loggedOperator = null;
+          document.getElementById("main-app").classList.add("hidden");
+          document.getElementById("role-gateway").classList.remove("hidden");
+        } else if (action === "nav") {
+          state.activeModule = btn.getAttribute("data-module");
+          renderSidebar();
+          renderCurrentModule();
+        } else if (action === "nav-close-more") {
+          state.activeModule = btn.getAttribute("data-module");
+          document.getElementById("mobile-more-drawer").classList.add("hidden");
+          renderSidebar();
+          renderCurrentModule();
+        } else if (action === "toggle-more") {
+          document.getElementById("mobile-more-drawer").classList.toggle("hidden");
+        } else if (action === "filter-stn") {
+          state.stationFilter = btn.getAttribute("data-val");
+          renderCurrentModule();
+        } else if (action === "open-station-layout") {
+          state.selectedLayoutStationCode = btn.getAttribute("data-code");
+          state.activeModule = "station_layout";
+          renderSidebar();
+          renderCurrentModule();
+        } else if (action === "inspect-layout-node") {
+          openInspectNodeModal(state.selectedLayoutStationCode, btn.getAttribute("data-node-id"));
+        } else if (action === "open-add-layout-node") {
+          openAddLayoutNodeModal(state.selectedLayoutStationCode, 50, 50);
+        } else if (action === "delete-layout-node") {
+          const st = state.data.stations.find(s => s.code === btn.getAttribute("data-stn"));
+          if (st) {
+            st.layoutNodes = (st.layoutNodes || []).filter(n => n.id !== btn.getAttribute("data-node"));
+            saveAndSync("حذف نقطة معدة من المخطط");
+            closeModal();
+            renderCurrentModule();
+          }
+        } else if (action === "set-interval-tab") {
+          state.operatorIntervalTab = btn.getAttribute("data-tab");
+          renderCurrentModule();
+        } else if (action === "capture-gps") {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+              state.capturedGps = pos.coords.latitude.toFixed(4) + ", " + pos.coords.longitude.toFixed(4);
+              document.getElementById("gps-photo-status").textContent = "📍 تم تحديد GPS: " + state.capturedGps;
+              showToast("تم التقاط الموقع!", "success");
+            }, () => { state.capturedGps = "تم التخطي"; });
+          }
+        } else if (action === "skip-gps-photo") {
+          state.capturedGps = "تم التخطي";
+          state.capturedPhotoName = "تم التخطي";
+          document.getElementById("gps-photo-status").textContent = "⏭️ تم التخطي";
+        } else if (action === "edit-reading") {
+          const rid = btn.getAttribute("data-id");
+          const rec = state.data.readingsLog.find(r => r.id === rid);
+          if (rec && state.role === "OPERATOR" && (Date.now() - Number(rec.createdAt)) > 15 * 60 * 1000) {
+            showToast("انتهت مهلة الـ 15 دقيقة للتعديل.", "error");
+            renderCurrentModule();
+            return;
+          }
+          state.editingReadingId = rid;
+          renderCurrentModule();
+          showToast("يمكنك تعديل القراءة وحفظها الآن.", "info");
+        } else if (action === "ai-quick-ask") {
+          const q = btn.getAttribute("data-q");
+          state.aiMessages.push({ sender: "user", text: q });
+          state.aiMessages.push({ sender: "bot", text: computeAiAnswer(q) });
+          renderCurrentModule();
+        } else if (action === "save-design-as-proposal") {
+          const type = document.getElementById("des-type").value;
+          const cap = Number(document.getElementById("des-cap").value) || 1000;
+          const tds = Number(document.getElementById("des-tds").value) || 40000;
+          const rec = Number(document.getElementById("des-rec").value) || 42;
+          const val = cap * (type === "SWRO" ? 9500 : 3800);
+          state.data.proposals.unshift({
+            id: "PRP-" + Math.floor(202610 + Math.random() * 89),
+            client: "عميل جديد (من حاسبة التصميم)",
+            project: `تصميم وتوريد محطة ${type} بطاقة ${cap} م³/يوم`,
+            type, capacity: cap, rawTds: tds, recovery: rec, valueEgp: val,
+            status: "مسودة فنية", engineer: "د. محمد محروس مختار", date: new Date().toISOString().slice(0, 10)
+          });
+          saveAndSync("إضافة عرض فني جديد من الحاسبة");
+          renderCurrentModule();
+          showToast("تم حفظ التصميم في سجل العروض الفنية والمالية!", "success");
+        } else if (action === "print-proposal-offer") {
+          const prp = state.data.proposals.find(p => p.id === btn.getAttribute("data-id"));
+          if (!prp) return;
+          openModal(`
+            <div id="printable-report-area" style="padding:28px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--navy-900);padding-bottom:14px;margin-bottom:18px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  ${getLogoHTMLForReport()}
+                  <div>
+                    <div style="font-size:19px;font-weight:800;">${state.data.companyName}</div>
+                    <div style="font-size:11px;color:#475569;">${state.data.companyTagline}</div>
+                  </div>
+                </div>
+                <div style="text-align:end;font-size:12px;">عرض فني ومالي رقم: <b>${prp.id}</b><br/>التاريخ: <b>${prp.date}</b></div>
+              </div>
+              <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;color:var(--water-600);">السادة / ${prp.client}</h3>
+              <p style="font-size:13.5px;margin-bottom:14px;">يسر شركة <b>ستى ووتر (CITY WATER)</b> أن تتقدم لسيادتكم بالعرض الفني والمالي لتنفيذ: <b>${prp.project}</b>.</p>
+              <table class="data-table" style="margin-bottom:20px;">
+                <thead><tr><th>البند الفني</th><th>المواصفة المعتمدة</th></tr></thead>
+                <tbody>
+                  <tr><td><b>نوع المحطة والسعة التصميمية</b></td><td>${prp.type} — ${Number(prp.capacity).toLocaleString()} م³/يوم</td></tr>
+                  <tr><td><b>نسبة الاستخلاص التصميمية</b></td><td>${prp.recovery}%</td></tr>
+                  <tr><td><b>الأغشية والطلمبات</b></td><td>أغشية Toray/FilmTec 8" + طلمبات Grundfos/Danfoss ستانلس 316L/Duplex</td></tr>
+                  <tr><td><b>إجمالي القيمة المالية التقديرية</b></td><td><b style="font-size:15px;color:var(--green-600);">${Number(prp.valueEgp).toLocaleString()} جنيه مصري</b></td></tr>
+                </tbody>
+              </table>
+              <div style="text-align:center;font-size:10.5px;color:#64748b;border-top:1px dashed #cbd5e1;padding-top:10px;">
+                City Water (ستى ووتر) — تم التصميم والتطوير بواسطة: د. محمد محروس مختار
+              </div>
+              <div class="no-print" style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px;">
+                <button type="button" class="btn btn-outline" data-action="close-modal">إغلاق</button>
+                <button type="button" class="btn btn-navy" data-action="print-report">🖨️ طباعة العرض A4</button>
+              </div>
+            </div>
+          `);
+        } else if (action === "quick-edit-stn") {
+          const st = state.data.stations.find(s => s.id === btn.getAttribute("data-id"));
+          if (!st) return;
+          openModal(`
+            <div style="background:var(--navy-900);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;">
+              <h3 style="font-size:16px;font-weight:800;">✏️ تعديل محطة: ${st.name} (${st.code})</h3>
+              <button type="button" data-action="close-modal" style="background:none;border:none;color:#fff;cursor:pointer;">✕</button>
+            </div>
+            <form id="quick-edit-stn-form" data-id="${st.id}" style="padding:20px;display:flex;flex-direction:column;gap:12px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div><label class="form-label">الكود</label><input type="text" id="qe-code" value="${st.code}" required class="form-control"/></div>
+                <div><label class="form-label">النوع</label><select id="qe-type" class="form-control"><option ${st.type==='SWRO'?'selected':''}>SWRO</option><option ${st.type==='BWRO'?'selected':''}>BWRO</option><option ${st.type==='WWRO'?'selected':''}>WWRO</option></select></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div><label class="form-label">اسم المحطة</label><input type="text" id="qe-name" value="${st.name}" required class="form-control"/></div>
+                <div><label class="form-label">الموقع</label><input type="text" id="qe-loc" value="${st.location}" required class="form-control"/></div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                <div><label class="form-label">السعة (م³/يوم)</label><input type="number" id="qe-cap" value="${st.capacity}" required class="form-control"/></div>
+                <div><label class="form-label">حد أملاح المنتج</label><input type="number" id="qe-maxtds" value="${st.maxTdsLimit}" required class="form-control"/></div>
+                <div><label class="form-label">عدد الفيازل</label><input type="number" id="qe-vessels" value="${st.vesselCount || 6}" required class="form-control"/></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div><label class="form-label">الحالة</label><select id="qe-status" class="form-control"><option value="ONLINE" ${st.status==='ONLINE'?'selected':''}>نشطة (ONLINE)</option><option value="WARNING" ${st.status==='WARNING'?'selected':''}>تحذير</option><option value="OFFLINE" ${st.status==='OFFLINE'?'selected':''}>متعطلة (OFFLINE)</option></select></div>
+                <div><label class="form-label">سعر المتر (ج.م)</label><input type="number" step="0.5" id="qe-price" value="${st.pricePerM3 || 10}" class="form-control"/></div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:8px;"><button type="button" class="btn btn-outline" data-action="close-modal">إلغاء</button><button type="submit" class="btn btn-primary">حفظ</button></div>
+            </form>
+          `);
+        } else if (action === "open-add-station") {
+          openModal(`
+            <div style="background:var(--navy-900);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;"><h3 style="font-size:16px;font-weight:800;">+ إضافة محطة جديدة</h3><button type="button" data-action="close-modal" style="background:none;border:none;color:#fff;cursor:pointer;">✕</button></div>
+            <form id="add-stn-form" style="padding:20px;display:flex;flex-direction:column;gap:12px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div><label class="form-label">الكود *</label><input type="text" id="ns-code" placeholder="SWRO-08" required class="form-control"/></div>
+                <div><label class="form-label">النوع</label><select id="ns-type" class="form-control"><option>SWRO</option><option>BWRO</option><option>WWRO</option></select></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div><label class="form-label">اسم المحطة *</label><input type="text" id="ns-name" required class="form-control"/></div>
+                <div><label class="form-label">الموقع *</label><input type="text" id="ns-loc" required class="form-control"/></div>
+              </div>
+              <div><label class="form-label">السعة اليومية (م³) *</label><input type="number" id="ns-cap" value="1000" required class="form-control"/></div>
+              <div style="display:flex;justify-content:flex-end;gap:8px;"><button type="button" class="btn btn-outline" data-action="close-modal">إلغاء</button><button type="submit" class="btn btn-primary">إضافة</button></div>
+            </form>
+          `);
+        } else if (action === "edit-price") {
+          const st = state.data.stations.find(s => s.id === btn.getAttribute("data-id"));
+          if (!st) return;
+          openModal(`
+            <div style="background:var(--navy-900);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;"><h3 style="font-size:16px;font-weight:800;">تعديل سعر المتر: ${st.name}</h3><button type="button" data-action="close-modal" style="background:none;border:none;color:#fff;cursor:pointer;">✕</button></div>
+            <form id="edit-price-form" data-id="${st.id}" style="padding:20px;display:flex;flex-direction:column;gap:12px;">
+              <div><label class="form-label">سعر بيع المتر المكعب (ج.م)</label><input type="number" step="0.1" id="ep-price" value="${st.pricePerM3}" required class="form-control"/></div>
+              <div style="display:flex;justify-content:flex-end;gap:8px;"><button type="button" class="btn btn-outline" data-action="close-modal">إلغاء</button><button type="submit" class="btn btn-primary">حفظ</button></div>
+            </form>
+          `);
+        } else if (action === "reset-company-logo") {
+          state.data.customLogoDataUrl = "";
+          renderCompanyLogos();
+          saveAndSync("استعادة شعار ستى ووتر الافتراضي");
+          renderCurrentModule();
+        } else if (action === "print-station-bom") {
+          state.reportType = "EQUIPMENT";
+          state.reportStation = state.selectedLayoutStationCode;
+          state.activeModule = "reports";
+          renderSidebar();
+          renderCurrentModule();
+        } else if (action === "sync-now") {
+          pullFromCloud(true);
+        } else if (action === "print-report") {
+          window.print();
+        } else if (action === "close-modal") {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("input", function (e) {
+        if (["bh-feed-flow", "bh-prod-flow", "bh-feed-tds", "bh-prod-tds"].includes(e.target.id)) recalcBiHourly();
+        if (["d8-curr", "d8-kwh"].includes(e.target.id)) recalcDaily8AM();
+        if (["des-cap", "des-tds", "des-rec"].includes(e.target.id)) calcRoPlantSizing();
+        if (e.target.id === "stn-search-box") { state.stationSearch = e.target.value; renderCurrentModule(); }
+      });
+
+      document.addEventListener("change", function (e) {
+        if (e.target.id === "f-stn-select") renderCurrentModule();
+        if (e.target.id === "layout-stn-selector") { state.selectedLayoutStationCode = e.target.value; renderCurrentModule(); }
+        if (e.target.id === "des-type") calcRoPlantSizing();
+        if (e.target.id === "rep-type-select") { state.reportType = e.target.value; renderCurrentModule(); }
+        if (e.target.id === "rep-stn-filter") { state.reportStation = e.target.value; renderCurrentModule(); }
+
+        if (e.target.id === "upload-company-logo" && e.target.files && e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function (ev) {
+            state.data.customLogoDataUrl = ev.target.result;
+            renderCompanyLogos();
+            saveAndSync("تحديث شعار شركة City Water");
+            renderCurrentModule();
+            showToast("تم رفع وتحديث شعار الشركة بنجاح!", "success");
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+
+        if (e.target.id === "upload-layout-bg" && e.target.files && e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function (ev) {
+            const st = state.data.stations.find(s => s.code === state.selectedLayoutStationCode);
+            if (st) {
+              st.layoutBgImage = ev.target.result;
+              saveAndSync("تحديث خلفية مخطط " + st.name);
+              renderCurrentModule();
+              showToast("تم رفع صورة الـ Layout للمحطة!", "success");
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      });
+
+      document.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const id = e.target.id;
+
+        if (id === "pin-verify-form") {
+          const targetRole = e.target.getAttribute("data-target-role");
+          const pin = document.getElementById("entered-pin-input").value.trim();
+          const expected = targetRole === "CEO" ? (state.data.ceoPin || "2026") : (state.data.mgrPin || "2026");
+          if (pin !== expected) {
+            showToast("الرقم السري (PIN) غير صحيح!", "error");
+            return;
+          }
+          closeModal();
+          enterRole(targetRole, null);
+        } else if (id === "operator-phone-login-form") {
+          const phone = normalizePhone(document.getElementById("login-op-phone").value);
+          const found = state.data.operators.find(o => normalizePhone(o.phone) === phone);
+          if (!found) {
+            showToast("رقم الهاتف غير مسجل في كشوف المشغلين!", "error");
+            return;
+          }
+          closeModal();
+          enterRole("OPERATOR", found);
+          showToast("أهلاً بك يا " + found.name, "success");
+        } else if (id === "ai-chat-form") {
+          const inp = document.getElementById("ai-user-input");
+          const q = inp.value.trim();
+          if (!q) return;
+          state.aiMessages.push({ sender: "user", text: q });
+          state.aiMessages.push({ sender: "bot", text: computeAiAnswer(q) });
+          renderCurrentModule();
+        } else if (id === "edit-layout-node-form") {
+          const st = state.data.stations.find(s => s.code === e.target.getAttribute("data-stn"));
+          const nd = st && (st.layoutNodes || []).find(n => n.id === e.target.getAttribute("data-node"));
+          if (nd) {
+            nd.tag = document.getElementById("nd-tag").value;
+            nd.name = document.getElementById("nd-name").value;
+            nd.brand = document.getElementById("nd-brand").value;
+            nd.model = document.getElementById("nd-model").value;
+            nd.specs = document.getElementById("nd-specs").value;
+            nd.status = document.getElementById("nd-status").value;
+            saveAndSync("تحديث معدة " + nd.name + " في " + st.name);
+            closeModal();
+            renderCurrentModule();
+            showToast("تم حفظ بيانات المعدة على المخطط!", "success");
+          }
+        } else if (id === "add-node-history-form") {
+          const st = state.data.stations.find(s => s.code === e.target.getAttribute("data-stn"));
+          const nd = st && (st.layoutNodes || []).find(n => n.id === e.target.getAttribute("data-node"));
+          if (nd) {
+            nd.history = nd.history || [];
+            nd.history.unshift({
+              date: new Date().toISOString().slice(0, 10),
+              type: document.getElementById("nd-hist-type").value,
+              note: document.getElementById("nd-hist-note").value
+            });
+            saveAndSync("سجل صيانة جديد على " + nd.name);
+            openInspectNodeModal(st.code, nd.id);
+            showToast("تم إضافة سجل الصيانة/العطل للمعدة!", "success");
+          }
+        } else if (id === "add-layout-node-form") {
+          const st = state.data.stations.find(s => s.code === e.target.getAttribute("data-stn"));
+          if (st) {
+            st.layoutNodes = st.layoutNodes || [];
+            st.layoutNodes.push({
+              id: "ND-" + Date.now(),
+              tag: document.getElementById("an-tag").value,
+              name: document.getElementById("an-name").value,
+              x: Number(e.target.getAttribute("data-x")) || 50,
+              y: Number(e.target.getAttribute("data-y")) || 50,
+              brand: document.getElementById("an-brand").value || "Standard",
+              model: document.getElementById("an-model").value || "-",
+              specs: document.getElementById("an-specs").value || "-",
+              status: "OPERATIONAL",
+              history: []
+            });
+            saveAndSync("إضافة معدة جديدة لمخطط " + st.name);
+            closeModal();
+            renderCurrentModule();
+            showToast("تمت إضافة المعدة للمخطط التفاعلي!", "success");
+          }
+        } else if (id === "periodic-reading-form") {
+          const stCode = document.getElementById("f-stn-select").value;
+          const st = state.data.stations.find(s => s.code === stCode) || state.data.stations[0];
+          const opName = document.getElementById("f-op-name").value;
+          const notes = document.getElementById("f-notes").value;
+          const tab = state.operatorIntervalTab;
+
+          let intervalLabel = "", summaryText = "", outOfSpec = false, vesselVals = [];
+          if (tab === "bihourly") {
+            intervalLabel = "كل ساعتين (Bi-Hourly)";
+            const ff = Number(document.getElementById("bh-feed-flow").value) || 0;
+            const pf = Number(document.getElementById("bh-prod-flow").value) || 0;
+            const ftds = Number(document.getElementById("bh-feed-tds").value) || 0;
+            const ptds = Number(document.getElementById("bh-prod-tds").value) || 0;
+            const press = Number(document.getElementById("bh-press").value) || 0;
+            const amp = Number(document.getElementById("bh-amp").value) || 0;
+            const rec = ff > 0 ? Number(((pf / ff) * 100).toFixed(1)) : 0;
+
+            if (ptds > Number(st.maxTdsLimit)) {
+              outOfSpec = true;
+              const vInputs = Array.from(document.querySelectorAll(".vessel-tds-input"));
+              for (let i = 0; i < vInputs.length; i++) {
+                if (!vInputs[i].value) {
+                  showToast("إجباري: يرجى إدخال أملاح فيزل رقم " + (i + 1), "error");
+                  vInputs[i].focus();
+                  return;
+                }
+                vesselVals.push(Number(vInputs[i].value));
+              }
+            }
+            st.feedFlow = ff; st.productFlow = pf; st.recovery = rec;
+            st.feedTds = ftds; st.productTds = ptds; st.roPressure = press; st.ampere = amp;
+            st.lastUpdate = "الآن";
+            if (st.status !== "OFFLINE") st.status = outOfSpec ? "WARNING" : "ONLINE";
+            summaryText = `فيد: ${ff} m³/h | منتج: ${pf} m³/h | ريكفري: ${rec}% | TDS منتج: ${ptds} ppm | ضغط: ${press} bar | أمبير: ${amp}A`;
+          } else if (tab === "daily8am") {
+            intervalLabel = "يومي - الساعة 8 صباحاً";
+            const prev = Number(document.getElementById("d8-prev").value) || 0;
+            const curr = Number(document.getElementById("d8-curr").value) || 0;
+            const net = Math.max(0, curr - prev);
+            st.prevMeter8am = prev; st.currMeter8am = curr; st.currentProduction = net;
+            summaryText = `عداد 8 ص: ${curr.toLocaleString()} | صافي إنتاج اليوم: ${net.toLocaleString()} م³/يوم`;
+          } else if (tab === "shift") {
+            intervalLabel = "كل وردية";
+            const flt = document.getElementById("sh-fault").value;
+            if (flt === "FAULT") { outOfSpec = true; st.status = "OFFLINE"; }
+            summaryText = `${document.getElementById("sh-shift").value} | النظافة: ${document.getElementById("sh-clean").value} | حرارة الطلمبات: ${document.getElementById("sh-pump-temp").value}`;
+          } else if (tab === "weekly") {
+            intervalLabel = "أسبوعي";
+            summaryText = `الغسيل: ${document.getElementById("wk-wash").value} | SDI: ${document.getElementById("wk-sdi").value}`;
+          } else {
+            intervalLabel = "شهري";
+            summaryText = `كفاءة الأغشية: ${document.getElementById("mo-norm").value}% | المعايرة: ${document.getElementById("mo-cal").value}`;
+          }
+          if (notes) summaryText += ` | ${notes}`;
+
+          state.data.readingsLog.unshift({
+            id: "RD-" + Date.now(), intervalType: intervalLabel, stationCode: st.code, stationName: st.name,
+            operatorName: opName, createdAt: Date.now(),
+            timeLabel: new Date().toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" }),
+            summary: summaryText, vesselReadings: vesselVals, outOfSpec: outOfSpec
+          });
+          state.editingReadingId = null;
+          saveAndSync("قراءة جديدة من " + st.name);
+          renderCurrentModule();
+          showToast("تم حفظ القراءة ومزامنتها لحظياً!", "success");
+        } else if (id === "quick-edit-stn-form") {
+          const st = state.data.stations.find(s => s.id === e.target.getAttribute("data-id"));
+          if (st) {
+            st.code = document.getElementById("qe-code").value.toUpperCase();
+            st.type = document.getElementById("qe-type").value;
+            st.name = document.getElementById("qe-name").value;
+            st.location = document.getElementById("qe-loc").value;
+            st.capacity = Number(document.getElementById("qe-cap").value) || 1000;
+            st.maxTdsLimit = Number(document.getElementById("qe-maxtds").value) || 350;
+            st.vesselCount = Number(document.getElementById("qe-vessels").value) || 6;
+            st.status = document.getElementById("qe-status").value;
+            st.pricePerM3 = Number(document.getElementById("qe-price").value) || 10;
+            if (st.status === "OFFLINE") st.currentProduction = 0;
+            saveAndSync("تعديل بيانات محطة " + st.name);
+            closeModal();
+            renderCurrentModule();
+            showToast("تم تحديث المحطة!", "success");
+          }
+        } else if (id === "add-stn-form") {
+          const cap = Number(document.getElementById("ns-cap").value) || 1000;
+          const st = {
+            id: "STN-" + Date.now(), code: document.getElementById("ns-code").value.toUpperCase(),
+            name: document.getElementById("ns-name").value, location: document.getElementById("ns-loc").value,
+            type: document.getElementById("ns-type").value, capacity: cap, currentProduction: Math.round(cap * 0.95),
+            status: "ONLINE", feedFlow: 90, productFlow: 40, recovery: 44, feedTds: 38000, productTds: 220,
+            maxTdsLimit: 350, vesselCount: 6, roPressure: 58, ampere: 95, ph: 7.4, prevMeter8am: 10000, currMeter8am: 10000 + cap,
+            pricePerM3: 15, chemCostPerM3: 1.5, powerCostPerM3: 3.5, lastUpdate: "الآن", layoutBgImage: "", layoutNodes: []
+          };
+          st.layoutNodes = buildDefaultLayoutNodes(st);
+          state.data.stations.push(st);
+          saveAndSync("إضافة محطة " + st.name);
+          closeModal();
+          renderCurrentModule();
+          showToast("تمت إضافة المحطة!", "success");
+        } else if (id === "edit-price-form") {
+          const st = state.data.stations.find(s => s.id === e.target.getAttribute("data-id"));
+          if (st) {
+            st.pricePerM3 = Number(document.getElementById("ep-price").value) || 0;
+            saveAndSync("تعديل تسعير " + st.name);
+            closeModal();
+            renderCurrentModule();
+            showToast("تم تحديث التسعير!", "success");
+          }
+        } else if (id === "admin-pins-form") {
+          state.data.ceoPin = document.getElementById("set-ceo-pin").value.trim() || "2026";
+          state.data.mgrPin = document.getElementById("set-mgr-pin").value.trim() || "2026";
+          saveAndSync("تحديث الأرقام السرية للإدارة");
+          showToast("تم حفظ الأرقام السرية بنجاح!", "success");
+        }
+      });
+
+      // ----------------------------------------------------------------------
+      // I. BOOTSTRAP
+      // ----------------------------------------------------------------------
+      function boot() {
+        renderCompanyLogos();
+        const iconMap = {
+          "icon-role-ceo": SVG_ICONS.ceo,
+          "icon-role-mgr": SVG_ICONS.dashboard,
+          "icon-role-op": SVG_ICONS.operations,
+          "icon-role-maint": SVG_ICONS.maintenance,
+          "mob-ico-home": SVG_ICONS.dashboard,
+          "mob-ico-stn": SVG_ICONS.stations,
+          "mob-ico-ops": SVG_ICONS.operations,
+          "mob-ico-ai": SVG_ICONS.ai,
+          "mob-ico-more": SVG_ICONS.more
+        };
+        Object.keys(iconMap).forEach(k => {
+          const el = document.getElementById(k);
+          if (el) el.innerHTML = iconMap[k];
+        });
+
+        setInterval(() => {
+          const c = document.getElementById("live-clock");
+          if (c) c.textContent = new Date().toLocaleString("ar-EG", { weekday: "long", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+        }, 1000);
+
+        pullFromCloud(false);
+      }
+
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+      else boot();
+    })();
+  </script>
+</body>
+</html>
